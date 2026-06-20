@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/MathCombat">
+        <file>Resource/Preview.png</file>
+        <file>Resource/Style.qss</file>
+        <file>Resource/play.png</file>
+        <file>Resource/HeroLeft1.png</file>
+        <file>Resource/HeroLeft2.png</file>
+        <file>Resource/HeroLeft3.png</file>
+        <file>Resource/HeroLeft4.png</file>
+        <file>Resource/HeroRight1.png</file>
+        <file>Resource/HeroRight2.png</file>
+        <file>Resource/HeroRight3.png</file>
+        <file>Resource/HeroRight4.png</file>
+        <file>Resource/Level1.png</file>
+    </qresource>
+</RCC>
