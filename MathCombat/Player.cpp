@@ -1,4 +1,4 @@
-#include "Player.h"
+Ôªø#include "Player.h"
 
 Player::Player(QObject *parent)
     : QObject(parent)
@@ -8,28 +8,28 @@ Player::Player(QObject *parent)
     movingLeft = false;
     movingRight = false;
 
-    // ===== «¿√–”« ¿ —œ–¿…“Œ¬ =====
+    // ===== –ó–ê–ì–†–£–ó–ö–ê –°–ü–†–ê–ô–¢–û–í =====
 
-    // ’Ó‰¸·‡ ‚Ô‡‚Ó
+    // –•–æ–¥—å–±–∞ –≤–ø—Ä–∞–≤–æ
     walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight1.png"));
     walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight2.png"));
     walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight3.png"));
     walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight4.png"));
 
-    // ’Ó‰¸·‡ ‚ÎÂ‚Ó
+    // –•–æ–¥—å–±–∞ –≤–ª–µ–≤–æ
     walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft1.png"));
     walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft2.png"));
     walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft3.png"));
     walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft4.png"));
 
-    // Idle ÒÔ‡ÈÚ˚
+    // Idle —Å–ø—Ä–∞–π—Ç—ã
     idleRight = QPixmap(":/MathCombat/Resource/HeroRight1.png");
     idleLeft = QPixmap(":/MathCombat/Resource/HeroLeft1.png");
 
-    // —Ú‡ÚÓ‚˚È ÒÔ‡ÈÚ
+    // –°—Ç–∞—Ä—Ç–æ–≤—ã–π —Å–ø—Ä–∞–π—Ç
     setPixmap(idleRight);
 
-    // ===== “¿…Ã≈– ¿Õ»Ã¿÷»» =====
+    // ===== –¢–ê–ô–ú–ï–† –ê–ù–ò–ú–ê–¶–ò–ò =====
 
     animationTimer = new QTimer(this);
 
@@ -42,9 +42,7 @@ Player::Player(QObject *parent)
 }
 
 Player::~Player()
-{
-
-}
+{}
 
 void Player::moveRight()
 {
@@ -89,7 +87,7 @@ void Player::nextFrame()
 {
     currentFrame++;
 
-    // ===== ¿Õ»Ã¿÷»ﬂ ¬œ–¿¬Œ =====
+    // ===== –ê–ù–ò–ú–ê–¶–ò–Ø –í–ü–†–ê–í–û =====
 
     if(movingRight)
     {
@@ -100,7 +98,7 @@ void Player::nextFrame()
         );
     }
 
-    // ===== ¿Õ»Ã¿÷»ﬂ ¬À≈¬Œ =====
+    // ===== –ê–ù–ò–ú–ê–¶–ò–Ø –í–õ–ï–í–û =====
 
     if(movingLeft)
     {

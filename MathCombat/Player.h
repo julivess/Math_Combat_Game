@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <QObject>
 #include <QGraphicsPixmapItem>
@@ -33,7 +33,6 @@ private:
 	QTimer* animationTimer;
 
 	int currentFrame;
-
 	bool movingLeft;
 	bool movingRight;
 
