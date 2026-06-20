@@ -32,17 +32,20 @@ public:
   Difficulty getDifficulty() const;
 
 private:
-	Difficulty difficulty;
+	Difficulty m_difficulty;
 
-  QVector<QPixmap> walkRightFrames;
-  QVector<QPixmap> walkLeftFrames;
+  void UpdateSprites();
+
+  QVector<QPixmap> Frames;
 
   QPixmap idleRight;
   QPixmap idleLeft;
 
   QTimer* animationTimer;
 
-  int currentFrame;
+  int m_currentFrame;
+
+  bool m_animationForward = true; 
 
   bool movingLeft;
   bool movingRight;

@@ -18,20 +18,25 @@ GameScene::GameScene(QObject *parent)
 
     m_player = new Player(this);
 
+    // ===== МОНСТЕР =====
+    m_monster = new Monster(Monster::Difficulty::Easy, this);
+
     addItem(m_player);
+    addItem(m_monster);
 
     m_player->setPos(120, 550);
+    m_monster->setPos(1000, 485);
 
     // ===== GAME LOOP =====
 
     m_gameTimer = new QTimer(this);
-
     connect(m_gameTimer,
             &QTimer::timeout,
             this,
             &GameScene::updateGame);
 
     m_gameTimer->start(15);
+    m_monster->startAnimation();
 }
 
 // =====================================================
@@ -46,6 +51,7 @@ void GameScene::updateGame()
     {
         m_player->moveRight();
         m_player->startAnimation();
+        m_monster->moveLeft();
     }
 
     // ===== ДВИЖЕНИЕ ВЛЕВО =====
@@ -53,8 +59,8 @@ void GameScene::updateGame()
     if(m_movingLeft)
     {
         m_player->moveLeft();
-
         m_player->startAnimation();
+        m_monster->moveRight();
     }
 
     // ===== ЕСЛИ НЕ ДВИГАЕТСЯ =====
@@ -63,6 +69,7 @@ void GameScene::updateGame()
     {
         m_player->stopAnimation();
     }
+
 }
 
 // =====================================================
@@ -90,6 +97,8 @@ void GameScene::keyPressEvent(QKeyEvent *event)
     {
         m_movingLeft = true;
     }
+    m_monster->startAnimation();
+
 
     QGraphicsScene::keyPressEvent(event);
 }

@@ -1,22 +1,22 @@
 #include "Monster.h"
 
 Monster::Monster(Difficulty diff, QObject* parent)
-    : QObject(parent), difficulty(diff)
+    : QObject(parent), m_difficulty(diff)
 {
-    currentFrame = 0;
+    m_currentFrame = 0;
 
     movingLeft = false;
     movingRight = false;
 
     // Спрайты
-    walkRightFrames.append(QPixmap(":/sprites/monster_right1.png"));
-    walkRightFrames.append(QPixmap(":/sprites/monster_right2.png"));
+    Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeft.png"));
+    Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeft2.png"));
+    Frames.append(QPixmap(":/MathCombat/Resource/MonsterProfile.png"));
+    Frames.append(QPixmap(":/MathCombat/Resource/MonsterRight2.png"));
+    Frames.append(QPixmap(":/MathCombat/Resource/MonsterRight.png"));
 
-    walkLeftFrames.append(QPixmap(":/sprites/monster_left1.png"));
-    walkLeftFrames.append(QPixmap(":/sprites/monster_left2.png"));
-
-    idleRight = QPixmap(":/sprites/monster_right1.png");
-    idleLeft = QPixmap(":/sprites/monster_left1.png");
+    idleRight = QPixmap(":/MathCombat/Resource/MonsterRight.png");
+    idleLeft = QPixmap(":/MathCombat/Resource/MonsterLeft.png");
 
     setPixmap(idleRight);
 
@@ -51,7 +51,7 @@ void Monster::moveLeft()
 void Monster::startAnimation()
 {
     if (!animationTimer->isActive())
-        animationTimer->start(150);
+        animationTimer->start(600);
 }
 
 void Monster::stopAnimation()
@@ -67,19 +67,38 @@ void Monster::stopAnimation()
 
 void Monster::nextFrame()
 {
-    currentFrame++;
+    setPixmap(Frames[m_currentFrame]);
 
-    if (movingRight)
+    if(m_animationForward)
     {
-        setPixmap(
-            walkRightFrames[currentFrame % walkRightFrames.size()]
-        );
-    }
+        m_currentFrame++;
 
-    if (movingLeft)
-    {
-        setPixmap(
-            walkLeftFrames[currentFrame % walkLeftFrames.size()]
-        );
+        if(m_currentFrame >= Frames.size() - 1)
+        {
+            m_animationForward = false;
+        }
     }
+    else
+    {
+        m_currentFrame--;
+
+        if(m_currentFrame <= 0)
+        {
+            m_animationForward = true;
+        }
+    }
+}
+
+Monster::Difficulty Monster::getDifficulty() const
+{
+    return m_difficulty;
+}
+
+void Monster::UpdateSprites()
+{
+  if (m_difficulty == Difficulty::Easy)
+  {
+    return;
+  }
+
 }

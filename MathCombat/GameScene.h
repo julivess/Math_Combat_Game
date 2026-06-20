@@ -6,7 +6,7 @@
 #include <QKeyEvent>
 
 #include "Player.h"
-
+#include "Monster.h"
 class GameScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -23,6 +23,7 @@ private slots:
 private:
 
     Player* m_player;
+    Monster* m_monster;
 
     QTimer* m_gameTimer;
 
