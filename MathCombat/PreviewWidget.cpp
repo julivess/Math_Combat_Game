@@ -1,4 +1,4 @@
-#include "PreviewWidget.h"
+﻿#include "PreviewWidget.h"
 
 PreviewWidget::PreviewWidget(QWidget *parent)
 	: QWidget(parent)

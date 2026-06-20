@@ -1,4 +1,4 @@
-#include "MathCombat.h"
+п»ї#include "MathCombat.h"
 #include <QtWidgets/QApplication>
 #include <QFile>
 
@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    // Загрузка стилей
+    // Р—Р°РіСЂСѓР·РєР° СЃС‚РёР»РµР№
     QFile styleFile("Resource/Style.qss");
     
     if (styleFile.open(QFile::ReadOnly)) {

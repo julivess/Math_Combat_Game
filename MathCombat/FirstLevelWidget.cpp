@@ -1,4 +1,4 @@
-#include "FirstLevelWidget.h"
+ï»¿#include "FirstLevelWidget.h"
 
 FirstLevelWidget::FirstLevelWidget(QWidget *parent)
 	: QWidget(parent)
@@ -6,7 +6,7 @@ FirstLevelWidget::FirstLevelWidget(QWidget *parent)
 {
 	m_ui->setupUi(this);
 
-	// Íóæíî ÷òîáû ñöåíà ïîëó÷àëà ñîáûòèÿ ñ êëàâèàòóðû
+	// ÐÑƒÐ¶Ð½Ð¾ Ñ‡Ñ‚Ð¾Ð±Ñ‹ ÑÑ†ÐµÐ½Ð° Ð¿Ð¾Ð»ÑƒÑ‡Ð°Ð»Ð° ÑÐ¾Ð±Ñ‹Ñ‚Ð¸Ñ Ñ ÐºÐ»Ð°Ð²Ð¸Ð°Ñ‚ÑƒÑ€Ñ‹
 	m_ui->graphicsView->setFocus();
 	m_ui->graphicsView->setFocusPolicy(Qt::StrongFocus); 
 

@@ -1,4 +1,4 @@
-#include "MathCombat.h"
+﻿#include "MathCombat.h"
 
 MathCombat::MathCombat(QWidget *parent)
     : QMainWindow(parent)
