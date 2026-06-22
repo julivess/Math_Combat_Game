@@ -1,4 +1,5 @@
 ﻿#include "FirstLevelWidget.h"
+#include "Monster.h"
 
 FirstLevelWidget::FirstLevelWidget(QWidget* parent)
 	: QWidget(parent)
@@ -16,7 +17,7 @@ FirstLevelWidget::FirstLevelWidget(QWidget* parent)
 	m_ui->graphicsView->setResizeAnchor(
 		QGraphicsView::NoAnchor);
 
-	m_scene = new GameScene(this);
+	m_scene = new GameScene({{new Monster(Monster::Difficulty::Easy, this), QPointF{900, 485}}}, ":/MathCombat/Resource/Level1.png", this);
 
 	m_ui->graphicsView->setScene(m_scene);
 

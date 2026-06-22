@@ -13,59 +13,129 @@
   <property name="windowTitle">
    <string>TaskWidget</string>
   </property>
-  <property name="style_type" stdset="0">
-   <string notr="true">DIALOG_WITH_TASK</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
+   <item row="2" column="0">
     <widget class="QWidget" name="verticalWidget" native="true">
      <property name="style_type" stdset="0">
       <string notr="true">DIALOG_WITH_TASK</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="4" column="3">
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="2" column="2" colspan="2">
        <widget class="QLabel" name="label">
+        <property name="minimumSize">
+         <size>
+          <width>600</width>
+          <height>200</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
-          <width>400</width>
-          <height>50</height>
+          <width>600</width>
+          <height>200</height>
          </size>
         </property>
         <property name="text">
          <string>TextLabel</string>
         </property>
+        <property name="style_type" stdset="0">
+         <string notr="true">TASK_LABEL</string>
+        </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="0">
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="1" column="4">
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item row="3" column="2">
        <widget class="QLineEdit" name="lineEdit">
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>60</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>100</width>
           <height>16777215</height>
          </size>
         </property>
+        <property name="style_type" stdset="0">
+         <string notr="true">ANSWER_EDIT</string>
+        </property>
        </widget>
       </item>
+      <item row="3" column="3">
+       <widget class="QPushButton" name="pushButton">
+        <property name="minimumSize">
+         <size>
+          <width>200</width>
+          <height>60</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
+        </property>
+        <property name="style_type" stdset="0">
+         <string notr="true">ANSWER_BUTTON</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QPushButton" name="pushButton">
-     <property name="minimumSize">
-      <size>
-       <width>200</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>400</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>PushButton</string>
-     </property>
     </widget>
    </item>
   </layout>

@@ -1,7 +1,7 @@
 ﻿#include "GameScene.h"
 
-GameScene::GameScene(QObject* parent)
-	: QGraphicsScene(parent)
+GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, QString BackgroundTheme, QObject* parent)
+	: QGraphicsScene(parent), m_vectorMonsters(vectorMonsters)
 {
 
 	m_movingLeft = false;
@@ -9,7 +9,7 @@ GameScene::GameScene(QObject* parent)
 
 	// ===== ФОН =====
 
-	QPixmap background(":/MathCombat/Resource/Level1.png");
+	QPixmap background(BackgroundTheme);
 
 	addPixmap(background);
 
@@ -17,15 +17,18 @@ GameScene::GameScene(QObject* parent)
 	// ===== ИГРОК =====
 
 	m_player = new Player(this);
+	addItem(m_player);
+	m_player->setPos(120, 550);
 
 	// ===== МОНСТЕР =====
-	m_monster = new Monster(Monster::Difficulty::Easy, this);
+	//m_monster = new Monster(Monster::Difficulty::Easy, this);
 
-	addItem(m_player);
-	addItem(m_monster);
-
-	m_player->setPos(120, 550);
-	m_monster->setPos(900, 485);
+	for (auto monster : m_vectorMonsters)
+	{
+		addItem(monster.first);
+		monster.first->setPos(monster.second);
+		monster.first->startAnimation();
+	}
 
 	// ===== GAME LOOP =====
 
@@ -33,7 +36,6 @@ GameScene::GameScene(QObject* parent)
 	connect(m_gameTimer, &QTimer::timeout, this, &GameScene::updateGame);
 
 	m_gameTimer->start(15);
-	m_monster->startAnimation();
 }
 
 // =====================================================
@@ -120,7 +122,6 @@ void GameScene::keyPressEvent(QKeyEvent* event)
 	{
 		m_movingLeft = true;
 	}
-	m_monster->startAnimation();
 
 
 	QGraphicsScene::keyPressEvent(event);

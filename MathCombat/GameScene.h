@@ -4,7 +4,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
 #include <QKeyEvent>
-#include <QPoint>
+#include <QPointF>
 
 #include "Player.h"
 #include "Monster.h"
@@ -16,7 +16,8 @@ class GameScene : public QGraphicsScene
 	Q_OBJECT
 
 public:
-	explicit GameScene(QObject* parent = nullptr);
+	explicit GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, 
+		                 QString BackgroundTheme, QObject* parent = nullptr);
 
 	void keyPressEvent(QKeyEvent* event) override;
 	void keyReleaseEvent(QKeyEvent* event) override;
@@ -30,7 +31,6 @@ private slots:
 private:
 
 	Player* m_player;
-	Monster* m_monster;
 
 	QTimer* m_gameTimer;
 
@@ -39,7 +39,7 @@ private:
 
 	bool m_combatBegin = false;
 
-	std::vector<std::pair<Monster*, QPoint>> m_vectorMonsters;
+	std::vector<std::pair<Monster*, QPointF>> m_vectorMonsters;
 };
 
 #endif // GAMESCENE_H
