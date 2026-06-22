@@ -55,6 +55,9 @@
     <ClCompile Include="Monster.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TaskWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Style.qss">
@@ -77,12 +80,18 @@
     <QtMoc Include="Monster.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="TaskWidget.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="PreviewWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="FirstLevelWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="TaskWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

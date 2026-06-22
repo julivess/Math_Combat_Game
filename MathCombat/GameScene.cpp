@@ -25,15 +25,12 @@ GameScene::GameScene(QObject *parent)
     addItem(m_monster);
 
     m_player->setPos(120, 550);
-    m_monster->setPos(1000, 485);
+    m_monster->setPos(900, 485);
 
     // ===== GAME LOOP =====
 
     m_gameTimer = new QTimer(this);
-    connect(m_gameTimer,
-            &QTimer::timeout,
-            this,
-            &GameScene::updateGame);
+    connect(m_gameTimer, &QTimer::timeout, this, &GameScene::updateGame);
 
     m_gameTimer->start(15);
     m_monster->startAnimation();
@@ -51,7 +48,7 @@ void GameScene::updateGame()
     {
         m_player->moveRight();
         m_player->startAnimation();
-        m_monster->moveLeft();
+        //m_monster->moveLeft();
     }
 
     // ===== ДВИЖЕНИЕ ВЛЕВО =====
@@ -60,7 +57,7 @@ void GameScene::updateGame()
     {
         m_player->moveLeft();
         m_player->startAnimation();
-        m_monster->moveRight();
+        //m_monster->moveRight();
     }
 
     // ===== ЕСЛИ НЕ ДВИГАЕТСЯ =====
@@ -68,6 +65,27 @@ void GameScene::updateGame()
     if(!m_movingLeft && !m_movingRight)
     {
         m_player->stopAnimation();
+    }
+
+    QList<QGraphicsItem*> collisions =
+        m_player->collidingItems();
+
+    for (QGraphicsItem* item : collisions)
+    {
+        Monster* monster =
+            dynamic_cast<Monster*>(item);
+
+        if (monster)
+        {
+            qDebug() << "Столкновение!";
+
+            emit CombatSignal();
+
+            m_player->stopAnimation();
+            m_monster->stopAnimation();
+            disconnect(m_gameTimer, &QTimer::timeout, this, &GameScene::updateGame);
+            return;
+        }
     }
 
 }

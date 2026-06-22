@@ -6,7 +6,6 @@ PreviewWidget::PreviewWidget(QWidget *parent)
 {
 	ui->setupUi(this);
 	connect(ui->buttonMewPlay, &QPushButton::clicked, this, &PreviewWidget::StartNewGame);
-
 }
 
 PreviewWidget::~PreviewWidget()

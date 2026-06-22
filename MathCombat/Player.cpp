@@ -33,10 +33,7 @@ Player::Player(QObject *parent)
 
     animationTimer = new QTimer(this);
 
-    connect(animationTimer,
-            &QTimer::timeout,
-            this,
-            &Player::nextFrame);
+    connect(animationTimer, &QTimer::timeout, this, &Player::nextFrame);
 
     animationTimer->start(15);
 }
@@ -46,18 +43,24 @@ Player::~Player()
 
 void Player::moveRight()
 {
+  if (x() + pixmap().width() < 1774)
+  {
     movingRight = true;
     movingLeft = false;
 
     moveBy(5, 0);
+  }
 }
 
 void Player::moveLeft()
 {
-    movingLeft = true;
-    movingRight = false;
+  if(x() > 0)
+    {
+        movingLeft = true;
+        movingRight = false;
 
-    moveBy(-5, 0);
+        moveBy(-5, 0);
+    }
 }
 
 void Player::startAnimation()

@@ -19,5 +19,6 @@ public slots:
   void StartNewGame();
 
 private:
+    void ShowErrorDialog();
     Ui::MathCombatClass* ui;
 };

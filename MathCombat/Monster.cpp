@@ -22,10 +22,7 @@ Monster::Monster(Difficulty diff, QObject* parent)
 
     animationTimer = new QTimer(this);
 
-    connect(animationTimer,
-            &QTimer::timeout,
-            this,
-            &Monster::nextFrame);
+    connect(animationTimer, &QTimer::timeout, this, &Monster::nextFrame);
 }
 
 Monster::~Monster()
@@ -100,5 +97,4 @@ void Monster::UpdateSprites()
   {
     return;
   }
-
 }

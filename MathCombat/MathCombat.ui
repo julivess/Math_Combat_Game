@@ -44,8 +44,12 @@
     </property>
     <item>
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>2</number>
+      </property>
       <widget class="PreviewWidget" name="previewWidget"/>
       <widget class="FirstLevelWidget" name="firstLevelWidget"/>
+      <widget class="TaskWidget" name="taskWidget"/>
      </widget>
     </item>
    </layout>
@@ -73,6 +77,12 @@
    <class>FirstLevelWidget</class>
    <extends>QWidget</extends>
    <header>FirstLevelWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TaskWidget</class>
+   <extends>QWidget</extends>
+   <header>TaskWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -16,6 +16,8 @@ public:
 	FirstLevelWidget(QWidget *parent = nullptr);
 	~FirstLevelWidget();
 
+signals:
+	void CombatSignal();
 private:
 	Ui::FirstLevelWidgetClass *m_ui;
 	GameScene* m_scene;

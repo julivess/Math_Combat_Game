@@ -5,6 +5,13 @@ QWidget [style_type = "PREVIEW_WIDGET"]
     background-position: center;
     background-attachment: fixed;
 }
+QWidget [style_type = "DIALOG_WITH_TASK"]
+{
+    background-image: url(:/MathCombat/Resource/dialog.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
 
 QPushButton[style_type = "NEW_GAME_BUTTON"]
 {

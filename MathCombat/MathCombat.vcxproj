@@ -97,6 +97,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PreviewWidget.cpp" />
+    <ClCompile Include="TaskWidget.cpp" />
     <QtRcc Include="Resource.qrc" />
     <QtUic Include="FirstLevelWidget.ui" />
     <QtUic Include="MathCombat.ui" />
@@ -104,6 +105,7 @@
     <ClCompile Include="MathCombat.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="PreviewWidget.ui" />
+    <QtUic Include="TaskWidget.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\Style.qss" />
@@ -122,6 +124,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Monster.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="TaskWidget.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -17,5 +17,6 @@
         <file>Resource/MonsterRight2.png</file>
         <file>Resource/MonsterLeft.png</file>
         <file>Resource/MonsterLeft2.png</file>
+        <file>Resource/dialog.png</file>
     </qresource>
 </RCC>

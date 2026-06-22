@@ -19,6 +19,9 @@ FirstLevelWidget::FirstLevelWidget(QWidget *parent)
 	m_scene = new GameScene(this);
 
 	m_ui->graphicsView->setScene(m_scene);
+
+	connect(m_scene, &GameScene::CombatSignal, this, &FirstLevelWidget::CombatSignal);
+
 }
 
 FirstLevelWidget::~FirstLevelWidget()

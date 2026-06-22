@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TaskWidgetClass</class>
+ <widget class="QWidget" name="TaskWidgetClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>957</width>
+    <height>679</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>TaskWidget</string>
+  </property>
+  <property name="style_type" stdset="0">
+   <string notr="true">DIALOG_WITH_TASK</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QWidget" name="verticalWidget" native="true">
+     <property name="style_type" stdset="0">
+      <string notr="true">DIALOG_WITH_TASK</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QPushButton" name="pushButton">
+     <property name="minimumSize">
+      <size>
+       <width>200</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>400</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>PushButton</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>

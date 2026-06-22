@@ -7,6 +7,7 @@
 
 #include "Player.h"
 #include "Monster.h"
+
 class GameScene : public QGraphicsScene
 {
     Q_OBJECT
@@ -16,6 +17,9 @@ public:
 
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
+
+signals:
+    void CombatSignal();
 
 private slots:
     void updateGame();
