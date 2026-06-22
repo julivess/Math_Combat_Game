@@ -9,16 +9,16 @@ QT_END_NAMESPACE
 
 class MathCombat : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    MathCombat(QWidget *parent = nullptr);
-    ~MathCombat();
+	MathCombat(QWidget* parent = nullptr);
+	~MathCombat();
 
 public slots:
-  void StartNewGame();
+	void StartNewGame();
 
 private:
-    void ShowErrorDialog();
-    Ui::MathCombatClass* ui;
+	void ShowErrorDialog();
+	Ui::MathCombatClass* ui;
 };

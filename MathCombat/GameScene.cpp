@@ -1,39 +1,39 @@
 ﻿#include "GameScene.h"
 
-GameScene::GameScene(QObject *parent)
-    : QGraphicsScene(parent)
+GameScene::GameScene(QObject* parent)
+	: QGraphicsScene(parent)
 {
 
-    m_movingLeft = false;
-    m_movingRight = false;
+	m_movingLeft = false;
+	m_movingRight = false;
 
-    // ===== ФОН =====
+	// ===== ФОН =====
 
-    QPixmap background(":/MathCombat/Resource/Level1.png");
+	QPixmap background(":/MathCombat/Resource/Level1.png");
 
-    addPixmap(background);
+	addPixmap(background);
 
-    setSceneRect(background.rect());
-    // ===== ИГРОК =====
+	setSceneRect(background.rect());
+	// ===== ИГРОК =====
 
-    m_player = new Player(this);
+	m_player = new Player(this);
 
-    // ===== МОНСТЕР =====
-    m_monster = new Monster(Monster::Difficulty::Easy, this);
+	// ===== МОНСТЕР =====
+	m_monster = new Monster(Monster::Difficulty::Easy, this);
 
-    addItem(m_player);
-    addItem(m_monster);
+	addItem(m_player);
+	addItem(m_monster);
 
-    m_player->setPos(120, 550);
-    m_monster->setPos(900, 485);
+	m_player->setPos(120, 550);
+	m_monster->setPos(900, 485);
 
-    // ===== GAME LOOP =====
+	// ===== GAME LOOP =====
 
-    m_gameTimer = new QTimer(this);
-    connect(m_gameTimer, &QTimer::timeout, this, &GameScene::updateGame);
+	m_gameTimer = new QTimer(this);
+	connect(m_gameTimer, &QTimer::timeout, this, &GameScene::updateGame);
 
-    m_gameTimer->start(15);
-    m_monster->startAnimation();
+	m_gameTimer->start(15);
+	m_monster->startAnimation();
 }
 
 // =====================================================
@@ -42,51 +42,51 @@ GameScene::GameScene(QObject *parent)
 
 void GameScene::updateGame()
 {
-    // ===== ДВИЖЕНИЕ ВПРАВО =====
+	// ===== ДВИЖЕНИЕ ВПРАВО =====
 
-    if(m_movingRight)
-    {
-        m_player->moveRight();
-        m_player->startAnimation();
-        //m_monster->moveLeft();
-    }
+	if (m_movingRight)
+	{
+		m_player->moveRight();
+		m_player->startAnimation();
+		//m_monster->moveLeft();
+	}
 
-    // ===== ДВИЖЕНИЕ ВЛЕВО =====
+	// ===== ДВИЖЕНИЕ ВЛЕВО =====
 
-    if(m_movingLeft)
-    {
-        m_player->moveLeft();
-        m_player->startAnimation();
-        //m_monster->moveRight();
-    }
+	if (m_movingLeft)
+	{
+		m_player->moveLeft();
+		m_player->startAnimation();
+		//m_monster->moveRight();
+	}
 
-    // ===== ЕСЛИ НЕ ДВИГАЕТСЯ =====
+	// ===== ЕСЛИ НЕ ДВИГАЕТСЯ =====
 
-    if(!m_movingLeft && !m_movingRight)
-    {
-        m_player->stopAnimation();
-    }
+	if (!m_movingLeft && !m_movingRight)
+	{
+		m_player->stopAnimation();
+	}
 
-    QList<QGraphicsItem*> collisions =
-        m_player->collidingItems();
+	QList<QGraphicsItem*> collisions =
+		m_player->collidingItems();
 
-    for (QGraphicsItem* item : collisions)
-    {
-        Monster* monster =
-            dynamic_cast<Monster*>(item);
+	for (QGraphicsItem* item : collisions)
+	{
+		Monster* monster =
+			dynamic_cast<Monster*>(item);
 
-        if (monster)
-        {
-            qDebug() << "Столкновение!";
+		if (monster)
+		{
+			qDebug() << "Столкновение!";
 
-            emit CombatSignal();
+			emit CombatSignal();
 
-            m_player->stopAnimation();
-            m_monster->stopAnimation();
-            disconnect(m_gameTimer, &QTimer::timeout, this, &GameScene::updateGame);
-            return;
-        }
-    }
+			m_combatBegin = true;
+			m_movingLeft = false;
+			m_movingRight = false;
+			return;
+		}
+	}
 
 }
 
@@ -94,57 +94,62 @@ void GameScene::updateGame()
 // НАЖАТИЕ КЛАВИШ
 // =====================================================
 
-void GameScene::keyPressEvent(QKeyEvent *event)
+void GameScene::keyPressEvent(QKeyEvent* event)
 {
-    // Чтобы событие не спамилось
-    if(event->isAutoRepeat())
-    {
-        return;
-    }
+	// если идет бой - не обрабатываем события с клавиатуры
+	if (m_combatBegin)
+	{
+		return;
+	}
+	// Чтобы событие не спамилось
+	if (event->isAutoRepeat())
+	{
+		return;
+	}
 
-    // ===== D =====
+	// ===== D =====
 
-    if(event->key() == Qt::Key_D)
-    {
-        m_movingRight = true;
-    }
+	if (event->key() == Qt::Key_D)
+	{
+		m_movingRight = true;
+	}
 
-    // ===== A =====
+	// ===== A =====
 
-    if(event->key() == Qt::Key_A)
-    {
-        m_movingLeft = true;
-    }
-    m_monster->startAnimation();
+	if (event->key() == Qt::Key_A)
+	{
+		m_movingLeft = true;
+	}
+	m_monster->startAnimation();
 
 
-    QGraphicsScene::keyPressEvent(event);
+	QGraphicsScene::keyPressEvent(event);
 }
 
 // =====================================================
 // ОТПУСКАНИЕ КЛАВИШ
 // =====================================================
 
-void GameScene::keyReleaseEvent(QKeyEvent *event)
+void GameScene::keyReleaseEvent(QKeyEvent* event)
 {
-    if(event->isAutoRepeat())
-    {
-        return;
-    }
+	if (event->isAutoRepeat())
+	{
+		return;
+	}
 
-    // ===== D =====
+	// ===== D =====
 
-    if(event->key() == Qt::Key_D)
-    {
-        m_movingRight = false;
-    }
+	if (event->key() == Qt::Key_D)
+	{
+		m_movingRight = false;
+	}
 
-    // ===== A =====
+	// ===== A =====
 
-    if(event->key() == Qt::Key_A)
-    {
-        m_movingLeft = false;
-    }
+	if (event->key() == Qt::Key_A)
+	{
+		m_movingLeft = false;
+	}
 
-    QGraphicsScene::keyReleaseEvent(event);
+	QGraphicsScene::keyReleaseEvent(event);
 }

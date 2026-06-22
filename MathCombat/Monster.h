@@ -6,47 +6,47 @@
 #include <QPixmap>
 #include <QTimer>
 
-class Monster  : public QObject, public QGraphicsPixmapItem
+class Monster : public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 
 public:
 	enum Difficulty
-    {
-        Easy,
-        Medium,
-        Hard
-    };
+	{
+		Easy,
+		Medium,
+		Hard
+	};
 
 	explicit Monster(Difficulty difficulty, QObject* parent = nullptr);
-  ~Monster();
+	~Monster();
 
-  void moveLeft();
-  void moveRight();
+	void moveLeft();
+	void moveRight();
 
-  void startAnimation();
-  void stopAnimation();
+	void startAnimation();
+	void stopAnimation();
 
-  void nextFrame();
+	void nextFrame();
 
-  Difficulty getDifficulty() const;
+	Difficulty getDifficulty() const;
 
 private:
 	Difficulty m_difficulty;
 
-  void UpdateSprites();
+	void UpdateSprites();
 
-  QVector<QPixmap> Frames;
+	QVector<QPixmap> Frames;
 
-  QPixmap idleRight;
-  QPixmap idleLeft;
+	QPixmap idleRight;
+	QPixmap idleLeft;
 
-  QTimer* animationTimer;
+	QTimer* animationTimer;
 
-  int m_currentFrame;
+	int m_currentFrame;
 
-  bool m_animationForward = true; 
+	bool m_animationForward = true;
 
-  bool movingLeft;
-  bool movingRight;
+	bool movingLeft;
+	bool movingRight;
 };

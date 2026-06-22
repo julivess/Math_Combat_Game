@@ -6,13 +6,13 @@
 #include <QPixmap>
 #include <QTimer>
 
-class Player  : public QObject, public QGraphicsPixmapItem
+class Player : public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 
 public:
 
-	Player(QObject *parent);
+	Player(QObject* parent);
 	~Player();
 
 	void moveLeft();

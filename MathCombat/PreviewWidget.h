@@ -12,7 +12,7 @@ class PreviewWidget : public QWidget
 	Q_OBJECT
 
 public:
-	PreviewWidget(QWidget *parent = nullptr);
+	PreviewWidget(QWidget* parent = nullptr);
 	~PreviewWidget();
 
 signals:
@@ -20,5 +20,5 @@ signals:
 	void StartNewGame();
 
 private:
-	Ui::PreviewWidgetClass *ui;
+	Ui::PreviewWidgetClass* ui;
 };

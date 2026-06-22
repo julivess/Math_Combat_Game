@@ -14,13 +14,13 @@ class TaskWidget : public QWidget
 public:
 
 	enum Difficulty
-  {
-      Easy,
-      Medium,
-      Hard
-  };
+	{
+		Easy,
+		Medium,
+		Hard
+	};
 
-	TaskWidget(QWidget *parent = nullptr);
+	TaskWidget(QWidget* parent = nullptr);
 	~TaskWidget();
 
 	void ShowTaskByDifficultyLevel(Difficulty leve);
@@ -54,7 +54,7 @@ private:
 		{"log_5(25) + log_5(5) = ", "3"}
 	};
 
-	const std::vector<std::pair<QString, QString>> m_tasksHard = 
+	const std::vector<std::pair<QString, QString>> m_tasksHard =
 	{
 		{"f(x) = x^3 - 4x + 1, f'(2) = ", "8"},
 		{"f(x) = e^2x, f'(0) = ", "2"},

@@ -1,41 +1,41 @@
 ﻿#include "Player.h"
 
-Player::Player(QObject *parent)
-    : QObject(parent)
+Player::Player(QObject* parent)
+	: QObject(parent)
 {
-    currentFrame = 0;
+	currentFrame = 0;
 
-    movingLeft = false;
-    movingRight = false;
+	movingLeft = false;
+	movingRight = false;
 
-    // ===== ЗАГРУЗКА СПРАЙТОВ =====
+	// ===== ЗАГРУЗКА СПРАЙТОВ =====
 
-    // Ходьба вправо
-    walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight1.png"));
-    walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight2.png"));
-    walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight3.png"));
-    walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight4.png"));
+	// Ходьба вправо
+	walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight1.png"));
+	walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight2.png"));
+	walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight3.png"));
+	walkRightFrames.append(QPixmap(":/MathCombat/Resource/HeroRight4.png"));
 
-    // Ходьба влево
-    walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft1.png"));
-    walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft2.png"));
-    walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft3.png"));
-    walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft4.png"));
+	// Ходьба влево
+	walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft1.png"));
+	walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft2.png"));
+	walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft3.png"));
+	walkLeftFrames.append(QPixmap(":/MathCombat/Resource/HeroLeft4.png"));
 
-    // Idle спрайты
-    idleRight = QPixmap(":/MathCombat/Resource/HeroRight1.png");
-    idleLeft = QPixmap(":/MathCombat/Resource/HeroLeft1.png");
+	// Idle спрайты
+	idleRight = QPixmap(":/MathCombat/Resource/HeroRight1.png");
+	idleLeft = QPixmap(":/MathCombat/Resource/HeroLeft1.png");
 
-    // Стартовый спрайт
-    setPixmap(idleRight);
+	// Стартовый спрайт
+	setPixmap(idleRight);
 
-    // ===== ТАЙМЕР АНИМАЦИИ =====
+	// ===== ТАЙМЕР АНИМАЦИИ =====
 
-    animationTimer = new QTimer(this);
+	animationTimer = new QTimer(this);
 
-    connect(animationTimer, &QTimer::timeout, this, &Player::nextFrame);
+	connect(animationTimer, &QTimer::timeout, this, &Player::nextFrame);
 
-    animationTimer->start(15);
+	animationTimer->start(15);
 }
 
 Player::~Player()
@@ -43,73 +43,73 @@ Player::~Player()
 
 void Player::moveRight()
 {
-  if (x() + pixmap().width() < 1774)
-  {
-    movingRight = true;
-    movingLeft = false;
+	if (x() + pixmap().width() < 1774)
+	{
+		movingRight = true;
+		movingLeft = false;
 
-    moveBy(5, 0);
-  }
+		moveBy(5, 0);
+	}
 }
 
 void Player::moveLeft()
 {
-  if(x() > 0)
-    {
-        movingLeft = true;
-        movingRight = false;
+	if (x() > 0)
+	{
+		movingLeft = true;
+		movingRight = false;
 
-        moveBy(-5, 0);
-    }
+		moveBy(-5, 0);
+	}
 }
 
 void Player::startAnimation()
 {
-    if(!animationTimer->isActive())
-    {
-        animationTimer->start(120);
-    }
+	if (!animationTimer->isActive())
+	{
+		animationTimer->start(120);
+	}
 }
 
 void Player::stopAnimation()
 {
-    animationTimer->stop();
+	animationTimer->stop();
 
-    if(movingRight)
-    {
-        setPixmap(idleRight);
-    }
+	if (movingRight)
+	{
+		setPixmap(idleRight);
+	}
 
-    if(movingLeft)
-    {
-        setPixmap(idleLeft);
-    }
+	if (movingLeft)
+	{
+		setPixmap(idleLeft);
+	}
 }
 
 void Player::nextFrame()
 {
-    currentFrame++;
+	currentFrame++;
 
-    // ===== АНИМАЦИЯ ВПРАВО =====
+	// ===== АНИМАЦИЯ ВПРАВО =====
 
-    if(movingRight)
-    {
-        setPixmap(
-            walkRightFrames[
-                currentFrame % walkRightFrames.size()
-            ]
-        );
-    }
+	if (movingRight)
+	{
+		setPixmap(
+			walkRightFrames[
+				currentFrame % walkRightFrames.size()
+			]
+		);
+	}
 
-    // ===== АНИМАЦИЯ ВЛЕВО =====
+	// ===== АНИМАЦИЯ ВЛЕВО =====
 
-    if(movingLeft)
-    {
-        setPixmap(
-            walkLeftFrames[
-                currentFrame % walkLeftFrames.size()
-            ]
-        );
-    }
+	if (movingLeft)
+	{
+		setPixmap(
+			walkLeftFrames[
+				currentFrame % walkLeftFrames.size()
+			]
+		);
+	}
 }
 

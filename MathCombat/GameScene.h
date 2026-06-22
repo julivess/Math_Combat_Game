@@ -4,35 +4,42 @@
 #include <QGraphicsScene>
 #include <QTimer>
 #include <QKeyEvent>
+#include <QPoint>
 
 #include "Player.h"
 #include "Monster.h"
+#include <vector>
+#include <utility>
 
 class GameScene : public QGraphicsScene
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit GameScene(QObject *parent = nullptr);
+	explicit GameScene(QObject* parent = nullptr);
 
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
+	void keyPressEvent(QKeyEvent* event) override;
+	void keyReleaseEvent(QKeyEvent* event) override;
 
 signals:
-    void CombatSignal();
+	void CombatSignal();
 
 private slots:
-    void updateGame();
+	void updateGame();
 
 private:
 
-    Player* m_player;
-    Monster* m_monster;
+	Player* m_player;
+	Monster* m_monster;
 
-    QTimer* m_gameTimer;
+	QTimer* m_gameTimer;
 
-    bool m_movingLeft;
-    bool m_movingRight;
+	bool m_movingLeft;
+	bool m_movingRight;
+
+	bool m_combatBegin = false;
+
+	std::vector<std::pair<Monster*, QPoint>> m_vectorMonsters;
 };
 
 #endif // GAMESCENE_H

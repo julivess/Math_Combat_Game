@@ -1,6 +1,6 @@
 ﻿#include "PreviewWidget.h"
 
-PreviewWidget::PreviewWidget(QWidget *parent)
+PreviewWidget::PreviewWidget(QWidget* parent)
 	: QWidget(parent)
 	, ui(new Ui::PreviewWidgetClass())
 {
