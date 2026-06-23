@@ -38,6 +38,14 @@ GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, Q
 	m_gameTimer->start(15);
 }
 
+GameScene::~GameScene()
+{
+	for (auto monster : m_vectorMonsters)
+	{
+		monster.first->deleteLater();
+	}
+}
+
 // =====================================================
 // ОБНОВЛЕНИЕ ИГРЫ
 // =====================================================
@@ -81,8 +89,10 @@ void GameScene::updateGame()
 		{
 			qDebug() << "Столкновение!";
 
-			emit CombatSignal();
+			emit CombatSignal(monster->getDifficulty());
 
+			m_gameTimer->stop();
+			numberDefeatedMonsters++;
 			m_combatBegin = true;
 			m_movingLeft = false;
 			m_movingRight = false;
@@ -153,4 +163,9 @@ void GameScene::keyReleaseEvent(QKeyEvent* event)
 	}
 
 	QGraphicsScene::keyReleaseEvent(event);
+}
+
+bool GameScene::AllMonstersDefeated()
+{
+	return numberDefeatedMonsters >= m_vectorMonsters.size();
 }

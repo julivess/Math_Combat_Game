@@ -2,6 +2,9 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_MathCombat.h"
+#include "Utils.h"
+#include "GameScene.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MathCombatClass; };
@@ -15,10 +18,25 @@ public:
 	MathCombat(QWidget* parent = nullptr);
 	~MathCombat();
 
+	bool IsLevelPassed(); //пройлен ли этот уровень 
+
+	void ShowFirstLevel();
+	void ShowSecondLevel();
+
 public slots:
 	void StartNewGame();
+	void StartCombat(Difficulty diff);
+	void EndCombat(bool result); 
 
 private:
+	void ContinueGame();
 	void ShowErrorDialog();
+
+	int currentLevel = 1;
+	int height;
+	int width;
+
+	GameScene* m_scene;
+
 	Ui::MathCombatClass* ui;
 };

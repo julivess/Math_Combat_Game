@@ -92,14 +92,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FirstLevelWidget.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PreviewWidget.cpp" />
     <ClCompile Include="TaskWidget.cpp" />
     <QtRcc Include="Resource.qrc" />
-    <QtUic Include="FirstLevelWidget.ui" />
     <QtUic Include="MathCombat.ui" />
     <QtMoc Include="MathCombat.h" />
     <ClCompile Include="MathCombat.cpp" />
@@ -114,9 +112,6 @@
     <QtMoc Include="PreviewWidget.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="FirstLevelWidget.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="GameScene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +122,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="TaskWidget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

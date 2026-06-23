@@ -1,5 +1,6 @@
 #include "Monster.h"
 
+
 Monster::Monster(Difficulty diff, QObject* parent)
 	: QObject(parent), m_difficulty(diff)
 {
@@ -8,15 +9,8 @@ Monster::Monster(Difficulty diff, QObject* parent)
 	movingLeft = false;
 	movingRight = false;
 
-	// Спрайты
-	Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeft.png"));
-	Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeft2.png"));
-	Frames.append(QPixmap(":/MathCombat/Resource/MonsterProfile.png"));
-	Frames.append(QPixmap(":/MathCombat/Resource/MonsterRight2.png"));
-	Frames.append(QPixmap(":/MathCombat/Resource/MonsterRight.png"));
-
-	idleRight = QPixmap(":/MathCombat/Resource/MonsterRight.png");
-	idleLeft = QPixmap(":/MathCombat/Resource/MonsterLeft.png");
+	// Спрайты в зависимости от сложности
+	UpdateSprites();
 
 	setPixmap(idleRight);
 
@@ -86,15 +80,43 @@ void Monster::nextFrame()
 	}
 }
 
-Monster::Difficulty Monster::getDifficulty() const
+Difficulty Monster::getDifficulty() const
 {
 	return m_difficulty;
 }
 
 void Monster::UpdateSprites()
 {
-	if (m_difficulty == Difficulty::Easy)
-	{
-		return;
+	switch (m_difficulty) {
+	case(Difficulty::Easy):
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeftEasy.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeft2Easy.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterProfileEasy.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterRight2Easy.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterRightEasy.png"));
+
+		idleRight = QPixmap(":/MathCombat/Resource/MonsterRightEasy.png");
+		idleLeft = QPixmap(":/MathCombat/Resource/MonsterLeftEasy.png");
+		break;
+	case(Difficulty::Medium):
+	  Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeftMedium.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeft2Medium.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterProfileMedium.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterRight2Medium.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterRightMedium.png"));
+
+		idleRight = QPixmap(":/MathCombat/Resource/MonsterRightMedium.png");
+		idleLeft = QPixmap(":/MathCombat/Resource/MonsterLeftMedium.png");
+		break;
+	case(Difficulty::Hard):
+	  Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeftHard.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterLeft2Hard.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterProfileHard.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterRight2Hard.png"));
+		Frames.append(QPixmap(":/MathCombat/Resource/MonsterRightHard.png"));
+
+		idleRight = QPixmap(":/MathCombat/Resource/MonsterRightHard.png");
+		idleLeft = QPixmap(":/MathCombat/Resource/MonsterLeftHard.png");
+		break;
 	}
 }

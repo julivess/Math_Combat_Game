@@ -2,14 +2,17 @@
 
 TaskWidget::TaskWidget(QWidget* parent)
 	: QWidget(parent)
+	, ui(new Ui::TaskWidgetClass())
 {
-	ui.setupUi(this);
+	ui->setupUi(this);
 
-	connect(ui.pushButton, &QPushButton::clicked, this, &TaskWidget::CheckingResponse);
+	connect(ui->pushButton, &QPushButton::clicked, this, &TaskWidget::CheckingResponse);
 }
 
 TaskWidget::~TaskWidget()
-{}
+{
+	delete ui;
+}
 
 void TaskWidget::ShowTaskByDifficultyLevel(Difficulty level)
 {
@@ -24,13 +27,16 @@ void TaskWidget::ShowTaskByDifficultyLevel(Difficulty level)
 	case(Difficulty::Hard):
 		ShowHardTask();
 		break;
-	}
+	};
+
+	return;
 }
 
 void TaskWidget::ShowEasyTask()
 {
 	currentDifficulty = Difficulty::Easy;
-	ui.label->setText(m_tasksEasy[m_easyInd].first);
+	ui->lineEdit->setText("");
+	ui->label->setText(m_tasksEasy[m_easyInd].first);
 
 	if (m_easyInd < m_tasksEasy.size())
 	{
@@ -44,7 +50,8 @@ void TaskWidget::ShowEasyTask()
 void TaskWidget::ShowMediumtask()
 {
 	currentDifficulty = Difficulty::Medium;
-	ui.label->setText(m_tasksMedium[m_mediumInd].first);
+	ui->lineEdit->setText("");
+	ui->label->setText(m_tasksMedium[m_mediumInd].first);
 
 	if (m_mediumInd < m_tasksMedium.size())
 	{
@@ -58,7 +65,8 @@ void TaskWidget::ShowMediumtask()
 void TaskWidget::ShowHardTask()
 {
 	currentDifficulty = Difficulty::Hard;
-	ui.label->setText(m_tasksHard[m_hardInd].first);
+	ui->lineEdit->setText("");
+	ui->label->setText(m_tasksHard[m_hardInd].first);
 
 	if (m_hardInd < m_tasksHard.size())
 	{
@@ -71,8 +79,8 @@ void TaskWidget::ShowHardTask()
 
 void TaskWidget::CheckingResponse()
 {
-	QString task = ui.label->text();
-	QString response = ui.lineEdit->text();
+	QString task = ui->label->text();
+	QString response = ui->lineEdit->text();
 
 	bool result = false;
 
@@ -107,8 +115,8 @@ void TaskWidget::CheckingResponse()
 				break;
 			}
 		}
-		break;
 	};
 
+	emit FightIsOver(result);
 	//return result;
 }

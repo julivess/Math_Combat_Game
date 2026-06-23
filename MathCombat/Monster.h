@@ -6,17 +6,13 @@
 #include <QPixmap>
 #include <QTimer>
 
+#include "Utils.h"
+
 class Monster : public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
 
 public:
-	enum Difficulty
-	{
-		Easy,
-		Medium,
-		Hard
-	};
 
 	explicit Monster(Difficulty difficulty, QObject* parent = nullptr);
 	~Monster();

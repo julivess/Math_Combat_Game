@@ -43,9 +43,6 @@
     <ClCompile Include="PreviewWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FirstLevelWidget.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -68,9 +65,6 @@
     <QtMoc Include="PreviewWidget.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="FirstLevelWidget.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="GameScene.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -88,11 +82,13 @@
     <QtUic Include="PreviewWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="FirstLevelWidget.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="TaskWidget.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,11 +12,17 @@
         <file>Resource/HeroRight3.png</file>
         <file>Resource/HeroRight4.png</file>
         <file>Resource/Level1.png</file>
-        <file>Resource/MonsterProfile.png</file>
-        <file>Resource/MonsterRight.png</file>
-        <file>Resource/MonsterRight2.png</file>
-        <file>Resource/MonsterLeft.png</file>
-        <file>Resource/MonsterLeft2.png</file>
         <file>Resource/dialog.png</file>
+        <file>Resource/MonsterLeft2Easy.png</file>
+        <file>Resource/MonsterLeft2Medium.png</file>
+        <file>Resource/MonsterLeftEasy.png</file>
+        <file>Resource/MonsterLeftMedium.png</file>
+        <file>Resource/MonsterProfileEasy.png</file>
+        <file>Resource/MonsterProfileMedium.png</file>
+        <file>Resource/MonsterRight2Easy.png</file>
+        <file>Resource/MonsterRight2Medium.png</file>
+        <file>Resource/MonsterRightEasy.png</file>
+        <file>Resource/MonsterRightMedium.png</file>
+        <file>Resource/level2.png</file>
     </qresource>
 </RCC>

@@ -6,19 +6,14 @@
 #include <map>
 #include <vector>
 #include <utility>
+#include "Utils.h"
 
+namespace Ui { class TaskWidgetClass; }
 class TaskWidget : public QWidget
 {
 	Q_OBJECT
 
 public:
-
-	enum Difficulty
-	{
-		Easy,
-		Medium,
-		Hard
-	};
 
 	TaskWidget(QWidget* parent = nullptr);
 	~TaskWidget();
@@ -28,6 +23,9 @@ public:
 private slots:
 	void CheckingResponse();
 
+signals:
+	void FightIsOver(bool result);
+
 private:
 	void ShowEasyTask();
 	void ShowMediumtask();
@@ -35,7 +33,7 @@ private:
 
 	Difficulty currentDifficulty = Difficulty::Easy;
 
-	Ui::TaskWidgetClass ui;
+	Ui::TaskWidgetClass* ui;
 	const std::vector<std::pair<QString, QString>> m_tasksEasy =
 	{
 		{"15 + 27 = ", "42"},
