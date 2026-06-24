@@ -104,6 +104,17 @@ void MathCombat::ContinueGame()
 			//ui->stackedWidget->setCurrentWidget(ui->)
 		}
 	}
+	if (currentLevel == 2)
+	{
+		bool thisLevelPassed = IsLevelPassed();
+		if (thisLevelPassed)
+		{
+			//ShowThirdLevel()
+		}
+		else {
+			m_scene->ContinueGame();
+		}
+	}
 	ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
 }
 
@@ -126,8 +137,14 @@ void MathCombat::ShowErrorDialog()
 
 	if (msgBox.clickedButton() == restartBtn) {
 		// Перезапуск игры
+		if (currentLevel == 1) {
+			ShowFirstLevel();
+		}
+		else if (currentLevel == 2)
+		{
+			ShowSecondLevel();
+		}
 		ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
-		ShowFirstLevel();
 	}
 	else if (msgBox.clickedButton() == exitBtn) {
 		// Переключение на другой стек виджет

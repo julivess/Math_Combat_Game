@@ -42,7 +42,9 @@ GameScene::~GameScene()
 {
 	for (auto monster : m_vectorMonsters)
 	{
-		monster.first->deleteLater();
+		if (monster.first) {
+			monster.first->deleteLater();
+		}
 	}
 }
 
@@ -90,6 +92,8 @@ void GameScene::updateGame()
 			qDebug() << "Столкновение!";
 
 			emit CombatSignal(monster->getDifficulty());
+
+			monster->moveBy(-1000, -1000);
 
 			m_gameTimer->stop();
 			numberDefeatedMonsters++;
@@ -168,4 +172,14 @@ void GameScene::keyReleaseEvent(QKeyEvent* event)
 bool GameScene::AllMonstersDefeated()
 {
 	return numberDefeatedMonsters >= m_vectorMonsters.size();
+}
+
+void GameScene::ContinueGame()
+{
+	auto currentPos = m_player->pos();
+
+	
+	m_combatBegin = false;
+
+	m_gameTimer->start();
 }

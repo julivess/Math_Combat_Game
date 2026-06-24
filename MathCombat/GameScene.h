@@ -25,6 +25,7 @@ public:
 	void keyReleaseEvent(QKeyEvent* event) override;
 
 	bool AllMonstersDefeated();
+	void ContinueGame();
 
 signals:
 	void CombatSignal(Difficulty diff);
