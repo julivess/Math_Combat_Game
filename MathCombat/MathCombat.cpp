@@ -70,10 +70,30 @@ void MathCombat::ShowSecondLevel()
 	}
 
 	m_scene = new GameScene({{new Monster(Difficulty::Medium), QPointF{600, 430}}, 
-		                       {new Monster(Difficulty::Medium), QPointF{1000, 430}}}, ":/MathCombat/Resource/level2.png", this);
+		                       {new Monster(Difficulty::Medium), QPointF{1200, 430}}}, ":/MathCombat/Resource/level2.png", this);
 
 	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
 	ui->graphicsView->setScene(m_scene);
+}
+
+void MathCombat::ShowThirdLevel()
+{
+	currentLevel = 3;
+	ui->graphicsView->setScene(nullptr);
+	if (m_scene)
+	{
+		m_scene->deleteLater();
+	}
+
+	m_scene = new GameScene({{new Monster(Difficulty::Hard), QPointF{800, 420}}}, ":/MathCombat/Resource/level2.png", this);
+
+	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
+	ui->graphicsView->setScene(m_scene);
+
+}
+
+void MathCombat::ShowCongratulation()
+{
 }
 
 
@@ -101,7 +121,6 @@ void MathCombat::ContinueGame()
 		bool thisLevelPassed = IsLevelPassed();
 		if (thisLevelPassed) {
 			ShowSecondLevel();
-			//ui->stackedWidget->setCurrentWidget(ui->)
 		}
 	}
 	if (currentLevel == 2)
@@ -109,10 +128,18 @@ void MathCombat::ContinueGame()
 		bool thisLevelPassed = IsLevelPassed();
 		if (thisLevelPassed)
 		{
-			//ShowThirdLevel()
+			ShowThirdLevel();
 		}
 		else {
 			m_scene->ContinueGame();
+		}
+	}
+	if (currentLevel == 3)
+	{
+		bool thisLevelPassed = IsLevelPassed();
+		if (thisLevelPassed)
+		{
+			ShowCongratulation();
 		}
 	}
 	ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
@@ -143,6 +170,10 @@ void MathCombat::ShowErrorDialog()
 		else if (currentLevel == 2)
 		{
 			ShowSecondLevel();
+		}
+		else if (currentLevel == 3)
+		{
+			ShowThirdLevel();
 		}
 		ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
 	}

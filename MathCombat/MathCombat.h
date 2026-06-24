@@ -22,6 +22,10 @@ public:
 
 	void ShowFirstLevel();
 	void ShowSecondLevel();
+	void ShowThirdLevel();
+
+	void ShowCongratulation();
+
 
 public slots:
 	void StartNewGame();

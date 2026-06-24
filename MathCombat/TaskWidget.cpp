@@ -38,6 +38,7 @@ void TaskWidget::ShowEasyTask()
 	ui->lineEdit->setText("");
 	ui->label->setText(m_tasksEasy[m_easyInd].first);
 
+	ui->pushButton->setFocus();
 	if (m_easyInd < m_tasksEasy.size())
 	{
 		++m_easyInd;
@@ -53,6 +54,7 @@ void TaskWidget::ShowMediumtask()
 	ui->lineEdit->setText("");
 	ui->label->setText(m_tasksMedium[m_mediumInd].first);
 
+	ui->pushButton->setFocus();
 	if (m_mediumInd < m_tasksMedium.size())
 	{
 		++m_mediumInd;
@@ -68,6 +70,7 @@ void TaskWidget::ShowHardTask()
 	ui->lineEdit->setText("");
 	ui->label->setText(m_tasksHard[m_hardInd].first);
 
+	ui->pushButton->setFocus();
 	if (m_hardInd < m_tasksHard.size())
 	{
 		++m_hardInd;
