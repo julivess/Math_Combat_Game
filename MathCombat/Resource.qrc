@@ -24,5 +24,10 @@
         <file>Resource/MonsterRightEasy.png</file>
         <file>Resource/MonsterRightMedium.png</file>
         <file>Resource/level2.png</file>
+        <file>Resource/MonsterLeft2Hard.png</file>
+        <file>Resource/MonsterLeftHard.png</file>
+        <file>Resource/MonsterProfileHard.png</file>
+        <file>Resource/MonsterRight2Hard.png</file>
+        <file>Resource/MonsterRightHard.png</file>
     </qresource>
 </RCC>
