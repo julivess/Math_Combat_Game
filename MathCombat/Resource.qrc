@@ -29,5 +29,6 @@
         <file>Resource/MonsterProfileHard.png</file>
         <file>Resource/MonsterRight2Hard.png</file>
         <file>Resource/MonsterRightHard.png</file>
+        <file>Resource/Level3.png</file>
     </qresource>
 </RCC>
