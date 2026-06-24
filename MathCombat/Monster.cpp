@@ -6,37 +6,20 @@ Monster::Monster(Difficulty diff, QObject* parent)
 {
 	m_currentFrame = 0;
 
-	movingLeft = false;
-	movingRight = false;
-
 	// Спрайты в зависимости от сложности
 	UpdateSprites();
 
+	// Начальная картинка монмтра
 	setPixmap(idleRight);
 
 	animationTimer = new QTimer(this);
 
+	// Таймер для обновления картинок монстра (Обновляется как только истекает timeout)
 	connect(animationTimer, &QTimer::timeout, this, &Monster::nextFrame);
 }
 
 Monster::~Monster()
 {
-}
-
-void Monster::moveRight()
-{
-	movingRight = true;
-	movingLeft = false;
-
-	moveBy(2, 0);
-}
-
-void Monster::moveLeft()
-{
-	movingLeft = true;
-	movingRight = false;
-
-	moveBy(-2, 0);
 }
 
 void Monster::startAnimation()
@@ -47,15 +30,10 @@ void Monster::startAnimation()
 
 void Monster::stopAnimation()
 {
-	animationTimer->stop();
-
-	if (movingRight)
-		setPixmap(idleRight);
-
-	if (movingLeft)
-		setPixmap(idleLeft);
+	animationTimer->stop(); // останавливает таймер
 }
 
+// Меняет картинки в порядке 1 -> 2 -> 3 -> 4 -> 5 -> 4 -> 3 -> 2 -> 1 -> ... и т.д.
 void Monster::nextFrame()
 {
 	setPixmap(Frames[m_currentFrame]);
@@ -85,6 +63,7 @@ Difficulty Monster::getDifficulty() const
 	return m_difficulty;
 }
 
+/// Для каждого уровня сложности свой внешний вид монстра
 void Monster::UpdateSprites()
 {
 	switch (m_difficulty) {

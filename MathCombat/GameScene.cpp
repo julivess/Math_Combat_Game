@@ -1,6 +1,6 @@
 ﻿#include "GameScene.h"
 
-GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, QString BackgroundTheme, QObject* parent)
+GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, QString BackgroundTheme, QPointF playerPos, QObject* parent)
 	: QGraphicsScene(parent), m_vectorMonsters(vectorMonsters)
 {
 
@@ -10,24 +10,23 @@ GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, Q
 	// ===== ФОН =====
 
 	QPixmap background(BackgroundTheme);
-
 	addPixmap(background);
-
 	setSceneRect(background.rect());
+
 	// ===== ИГРОК =====
 
 	m_player = new Player(this);
-	addItem(m_player);
-	m_player->setPos(120, 550);
+	addItem(m_player); // Добавляем на сцену
+	m_player->setPos(playerPos); // Задаем положение
 
 	// ===== МОНСТЕР =====
 	//m_monster = new Monster(Monster::Difficulty::Easy, this);
 
 	for (auto monster : m_vectorMonsters)
 	{
-		addItem(monster.first);
-		monster.first->setPos(monster.second);
-		monster.first->startAnimation();
+		addItem(monster.first); // Добавляем монстра на сцену
+		monster.first->setPos(monster.second); // Задаем ему позицию
+		monster.first->startAnimation(); // Начинаем анимацию
 	}
 
 	// ===== GAME LOOP =====
@@ -40,6 +39,7 @@ GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, Q
 
 GameScene::~GameScene()
 {
+	// При удалении объекта сцены так же удаляются все ее монстры 
 	for (auto monster : m_vectorMonsters)
 	{
 		if (monster.first) {
@@ -89,17 +89,21 @@ void GameScene::updateGame()
 
 		if (monster)
 		{
+			// ПРОИЗОШЛО СТОЛКНОВЕНИЕ С МОНСТРОМ 
 			qDebug() << "Столкновение!";
 
-			emit CombatSignal(monster->getDifficulty());
+			emit CombatSignal(monster->getDifficulty()); // Отправляем сигнал о том что произошло столкновение 
+			// с монстром сложности monster->getDifficulty() (Его поймает класс MathCombat)
 
-			monster->moveBy(-1000, -1000);
 
-			m_gameTimer->stop();
-			numberDefeatedMonsters++;
-			m_combatBegin = true;
-			m_movingLeft = false;
-			m_movingRight = false;
+			monster->moveBy(-1000, -1000); // Визуально убирает монстра со сцены 
+			// Это нужно что бы он перестал отображаться на сцене, если его победят
+
+			m_gameTimer->stop(); // Останавливаем таймер для обновления игры
+			numberDefeatedMonsters++; // Считаем монстра побежденным (Мы не вернемся на эту сцену в случае поражения пользователя)
+			m_combatBegin = true; // Флаг что бой начался. Нажатия на клавиутуру не обрабатываются во время боя
+			m_movingLeft = false; // Нет движения вправо
+			m_movingRight = false; // нет движения влево
 			return;
 		}
 	}
@@ -169,17 +173,17 @@ void GameScene::keyReleaseEvent(QKeyEvent* event)
 	QGraphicsScene::keyReleaseEvent(event);
 }
 
+// true - если на сцене все монстры побеждены
 bool GameScene::AllMonstersDefeated()
 {
 	return numberDefeatedMonsters >= m_vectorMonsters.size();
 }
 
+
+// Продолжаем игру
 void GameScene::ContinueGame()
 {
-	auto currentPos = m_player->pos();
+	m_combatBegin = false; // Бой закончился (снова обрабатывает собития с клавиатуры)
 
-	
-	m_combatBegin = false;
-
-	m_gameTimer->start();
+	m_gameTimer->start(); // Снова запускаем таймер
 }

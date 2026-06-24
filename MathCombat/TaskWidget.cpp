@@ -14,6 +14,7 @@ TaskWidget::~TaskWidget()
 	delete ui;
 }
 
+// Показать пример с заданным уровнем сложности 
 void TaskWidget::ShowTaskByDifficultyLevel(Difficulty level)
 {
 	switch (level)
@@ -32,6 +33,7 @@ void TaskWidget::ShowTaskByDifficultyLevel(Difficulty level)
 	return;
 }
 
+// Показать простой пример
 void TaskWidget::ShowEasyTask()
 {
 	currentDifficulty = Difficulty::Easy;
@@ -48,6 +50,7 @@ void TaskWidget::ShowEasyTask()
 	}
 }
 
+// Показать пример средней сложности
 void TaskWidget::ShowMediumtask()
 {
 	currentDifficulty = Difficulty::Medium;
@@ -64,6 +67,7 @@ void TaskWidget::ShowMediumtask()
 	}
 }
 
+//Показать сложный пример
 void TaskWidget::ShowHardTask()
 {
 	currentDifficulty = Difficulty::Hard;
@@ -80,6 +84,7 @@ void TaskWidget::ShowHardTask()
 	}
 }
 
+// Проверить ответ пользователя
 void TaskWidget::CheckingResponse()
 {
 	QString task = ui->label->text();
@@ -120,6 +125,6 @@ void TaskWidget::CheckingResponse()
 		}
 	};
 
-	emit FightIsOver(result);
+	emit FightIsOver(result); // Испускаем сигнал с результатом боя (Его поймает класс MathCombat)
 	//return result;
 }

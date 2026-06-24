@@ -1,6 +1,7 @@
 ﻿#include "MathCombat.h"
 #include <QMessageBox>
 #include <QScreen>
+#include <QDialog>
 
 MathCombat::MathCombat(QWidget* parent)
 	: QMainWindow(parent)
@@ -8,28 +9,15 @@ MathCombat::MathCombat(QWidget* parent)
 {
 	ui->setupUi(this);
 
-		// Нужно чтобы сцена получала события с клавиатуры
+	// Нужно чтобы сцена получала события с клавиатуры
 
 	ui->graphicsView->setFocus();
 	ui->graphicsView->setFocusPolicy(Qt::StrongFocus);
 
-	ui->graphicsView->setTransformationAnchor(
-		QGraphicsView::NoAnchor);
+	ui->graphicsView->setTransformationAnchor(QGraphicsView::NoAnchor);
 
-	ui->graphicsView->setResizeAnchor(
-		QGraphicsView::NoAnchor);
+	ui->graphicsView->setResizeAnchor(QGraphicsView::NoAnchor);
 
-
-	QScreen* screen = QGuiApplication::primaryScreen();
-	if (screen)
-	{
-		QRect geometry = screen->geometry();
-
-		width = geometry.width();
-		height = geometry.height();
-
-		ui->graphicsView->setFixedSize(width, height);
-	}
 
 	ui->stackedWidget->setCurrentWidget(ui->previewWidget);
 	connect(ui->previewWidget, &PreviewWidget::StartNewGame, this, &MathCombat::StartNewGame);
@@ -54,7 +42,7 @@ void MathCombat::ShowFirstLevel()
 	{
 		m_scene->deleteLater();
 	}
-	m_scene = new GameScene({{new Monster(Difficulty::Easy), QPointF{900, 485}}}, ":/MathCombat/Resource/Level1.png", this);
+	m_scene = new GameScene({ {new Monster(Difficulty::Easy), QPointF{900, 485}} }, ":/MathCombat/Resource/Level1.png", QPoint{ 120, 550 }, this);
 	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
 	ui->graphicsView->setScene(m_scene);
 
@@ -69,8 +57,9 @@ void MathCombat::ShowSecondLevel()
 		m_scene->deleteLater();
 	}
 
-	m_scene = new GameScene({{new Monster(Difficulty::Medium), QPointF{600, 430}}, 
-		                       {new Monster(Difficulty::Medium), QPointF{1200, 430}}}, ":/MathCombat/Resource/level2.png", this);
+	m_scene = new GameScene({ {new Monster(Difficulty::Medium), QPointF{600, 470}},
+													 {new Monster(Difficulty::Medium), QPointF{1200, 470}} },
+		":/MathCombat/Resource/Level3.png", QPoint{ 120, 600 }, this);
 
 	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
 	ui->graphicsView->setScene(m_scene);
@@ -85,7 +74,7 @@ void MathCombat::ShowThirdLevel()
 		m_scene->deleteLater();
 	}
 
-	m_scene = new GameScene({{new Monster(Difficulty::Hard), QPointF{800, 420}}}, ":/MathCombat/Resource/level2.png", this);
+	m_scene = new GameScene({ {new Monster(Difficulty::Hard), QPointF{800, 420}} }, ":/MathCombat/Resource/level2.png", QPoint{ 120, 550 }, this);
 
 	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
 	ui->graphicsView->setScene(m_scene);
@@ -94,6 +83,43 @@ void MathCombat::ShowThirdLevel()
 
 void MathCombat::ShowCongratulation()
 {
+	QDialog* dialog = new QDialog(this);
+	//dialog->setWindowTitle("Поздравляем!");
+	dialog->setFixedSize(700, 550);
+	dialog->setModal(true);
+
+	// Создаем вертикальный layout
+	QVBoxLayout* layout = new QVBoxLayout(dialog);
+	layout->setSpacing(20);
+	layout->setContentsMargins(30, 30, 30, 30);
+
+	// Текст поздравления
+	QString congratulationText =
+		"ПОЗДРАВЛЯЕМ!\n\n"
+		"Вы победили всех монстров\n"
+		"и прошли MATH COMBAT!\n\n";
+
+	QLabel* label = new QLabel(congratulationText);
+	label->setAlignment(Qt::AlignCenter);
+	label->setProperty("style_type", "TASK_LABEL");
+	// Кнопка закрытия
+	QPushButton* closeButton = new QPushButton("✕ Закрыть");
+	closeButton->setFixedSize(200, 70);
+	closeButton->setProperty("style_type", "ANSWER_BUTTON");
+	// Подключаем кнопку к закрытию диалога
+	QObject::connect(closeButton, &QPushButton::clicked, dialog, &QDialog::accept);
+
+	// Добавляем виджеты в layout
+	layout->addWidget(label);
+	layout->addWidget(closeButton, 0, Qt::AlignCenter);
+
+
+	// Показываем диалог
+	dialog->exec();
+
+	// Автоматическое удаление после закрытия
+	dialog->deleteLater();
+
 }
 
 
@@ -140,6 +166,8 @@ void MathCombat::ContinueGame()
 		if (thisLevelPassed)
 		{
 			ShowCongratulation();
+			ui->stackedWidget->setCurrentWidget(ui->previewWidget);
+			return;
 		}
 	}
 	ui->stackedWidget->setCurrentWidget(ui->levelsWidget);

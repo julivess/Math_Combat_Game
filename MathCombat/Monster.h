@@ -8,6 +8,7 @@
 
 #include "Utils.h"
 
+// Класс монстра. Поддерживает 3 уровня сложности монстра
 class Monster : public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
@@ -17,32 +18,26 @@ public:
 	explicit Monster(Difficulty difficulty, QObject* parent = nullptr);
 	~Monster();
 
-	void moveLeft();
-	void moveRight();
+	void startAnimation(); // Начать анимацию 
+	void stopAnimation();  // Остановить анимацию
 
-	void startAnimation();
-	void stopAnimation();
+	void nextFrame(); // Показывает следующую картинку спрайта
 
-	void nextFrame();
-
-	Difficulty getDifficulty() const;
+	Difficulty getDifficulty() const; // Возвращает сложность монстра
 
 private:
-	Difficulty m_difficulty;
+	Difficulty m_difficulty; // Сложность монстра
 
-	void UpdateSprites();
+	void UpdateSprites(); // Добавляет спрайты по уровню сложности монстра
 
-	QVector<QPixmap> Frames;
+	QVector<QPixmap> Frames; // Вектор спрайтов
 
-	QPixmap idleRight;
-	QPixmap idleLeft;
+	QPixmap idleRight; // Смотрит вправо
+	QPixmap idleLeft;  // Смотрит влево
 
-	QTimer* animationTimer;
+	QTimer* animationTimer; // Таймер анимации
 
-	int m_currentFrame;
+	int m_currentFrame; // Индекс текущей картинки в векторе 
 
-	bool m_animationForward = true;
-
-	bool movingLeft;
-	bool movingRight;
+	bool m_animationForward = true; // Монстр поворачивается вперет (true) или назад (false)
 };

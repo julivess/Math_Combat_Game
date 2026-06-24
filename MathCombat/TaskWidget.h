@@ -9,6 +9,9 @@
 #include "Utils.h"
 
 namespace Ui { class TaskWidgetClass; }
+
+// Класс окна с математическими примерами.
+// Имеет 3 уровня сложности 
 class TaskWidget : public QWidget
 {
 	Q_OBJECT
@@ -18,22 +21,24 @@ public:
 	TaskWidget(QWidget* parent = nullptr);
 	~TaskWidget();
 
-	void ShowTaskByDifficultyLevel(Difficulty leve);
+	void ShowTaskByDifficultyLevel(Difficulty leve); // Показать пример с заданным уровнем сложности 
 
 private slots:
-	void CheckingResponse();
+	void CheckingResponse(); // Проверить ответ пользователя
 
 signals:
-	void FightIsOver(bool result);
+	void FightIsOver(bool result); // Сигнал отправляется после проверки ответа
+	// (result = true - Пользователь ответил правильно)
+	// (result = false - Пользователь ответил неправильно)
 
 private:
-	void ShowEasyTask();
-	void ShowMediumtask();
-	void ShowHardTask();
+	void ShowEasyTask(); // Показать простой пример
+	void ShowMediumtask(); // Показать пример средней сложности
+	void ShowHardTask();   // Показать сложный пример
 
-	Difficulty currentDifficulty = Difficulty::Easy;
+	Difficulty currentDifficulty = Difficulty::Easy; // Уровень сложности текущего примера
 
-	Ui::TaskWidgetClass* ui;
+
 	const std::vector<std::pair<QString, QString>> m_tasksEasy =
 	{
 		{"15 + 27 = ", "42"},
@@ -62,5 +67,7 @@ private:
 	int m_easyInd = 0;
 	int m_mediumInd = 0;
 	int m_hardInd = 0;
+
+	Ui::TaskWidgetClass* ui;
 
 };
