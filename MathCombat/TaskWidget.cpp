@@ -1,4 +1,4 @@
-#include "TaskWidget.h"
+п»ї#include "TaskWidget.h"
 
 TaskWidget::TaskWidget(QWidget* parent)
 	: QWidget(parent)
@@ -14,7 +14,7 @@ TaskWidget::~TaskWidget()
 	delete ui;
 }
 
-// Показать пример с заданным уровнем сложности 
+// РџРѕРєР°Р·Р°С‚СЊ РїСЂРёРјРµСЂ СЃ Р·Р°РґР°РЅРЅС‹Рј СѓСЂРѕРІРЅРµРј СЃР»РѕР¶РЅРѕСЃС‚Рё 
 void TaskWidget::ShowTaskByDifficultyLevel(Difficulty level)
 {
 	switch (level)
@@ -33,7 +33,7 @@ void TaskWidget::ShowTaskByDifficultyLevel(Difficulty level)
 	return;
 }
 
-// Показать простой пример
+// РџРѕРєР°Р·Р°С‚СЊ РїСЂРѕСЃС‚РѕР№ РїСЂРёРјРµСЂ
 void TaskWidget::ShowEasyTask()
 {
 	currentDifficulty = Difficulty::Easy;
@@ -50,7 +50,7 @@ void TaskWidget::ShowEasyTask()
 	}
 }
 
-// Показать пример средней сложности
+// РџРѕРєР°Р·Р°С‚СЊ РїСЂРёРјРµСЂ СЃСЂРµРґРЅРµР№ СЃР»РѕР¶РЅРѕСЃС‚Рё
 void TaskWidget::ShowMediumtask()
 {
 	currentDifficulty = Difficulty::Medium;
@@ -67,7 +67,7 @@ void TaskWidget::ShowMediumtask()
 	}
 }
 
-//Показать сложный пример
+//РџРѕРєР°Р·Р°С‚СЊ СЃР»РѕР¶РЅС‹Р№ РїСЂРёРјРµСЂ
 void TaskWidget::ShowHardTask()
 {
 	currentDifficulty = Difficulty::Hard;
@@ -84,7 +84,7 @@ void TaskWidget::ShowHardTask()
 	}
 }
 
-// Проверить ответ пользователя
+// РџСЂРѕРІРµСЂРёС‚СЊ РѕС‚РІРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 void TaskWidget::CheckingResponse()
 {
 	QString task = ui->label->text();
@@ -125,6 +125,6 @@ void TaskWidget::CheckingResponse()
 		}
 	};
 
-	emit FightIsOver(result); // Испускаем сигнал с результатом боя (Его поймает класс MathCombat)
+	emit FightIsOver(result); // РСЃРїСѓСЃРєР°РµРј СЃРёРіРЅР°Р» СЃ СЂРµР·СѓР»СЊС‚Р°С‚РѕРј Р±РѕСЏ (Р•РіРѕ РїРѕР№РјР°РµС‚ РєР»Р°СЃСЃ MathCombat)
 	//return result;
 }

@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include <QObject>
 #include <QGraphicsPixmapItem>
@@ -8,7 +8,7 @@
 
 #include "Utils.h"
 
-// Класс монстра. Поддерживает 3 уровня сложности монстра
+// РљР»Р°СЃСЃ РјРѕРЅСЃС‚СЂР°. РџРѕРґРґРµСЂР¶РёРІР°РµС‚ 3 СѓСЂРѕРІРЅСЏ СЃР»РѕР¶РЅРѕСЃС‚Рё РјРѕРЅСЃС‚СЂР°
 class Monster : public QObject, public QGraphicsPixmapItem
 {
 	Q_OBJECT
@@ -18,26 +18,26 @@ public:
 	explicit Monster(Difficulty difficulty, QObject* parent = nullptr);
 	~Monster();
 
-	void startAnimation(); // Начать анимацию 
-	void stopAnimation();  // Остановить анимацию
+	void startAnimation(); // РќР°С‡Р°С‚СЊ Р°РЅРёРјР°С†РёСЋ 
+	void stopAnimation();  // РћСЃС‚Р°РЅРѕРІРёС‚СЊ Р°РЅРёРјР°С†РёСЋ
 
-	void nextFrame(); // Показывает следующую картинку спрайта
+	void nextFrame(); // РџРѕРєР°Р·С‹РІР°РµС‚ СЃР»РµРґСѓСЋС‰СѓСЋ РєР°СЂС‚РёРЅРєСѓ СЃРїСЂР°Р№С‚Р°
 
-	Difficulty getDifficulty() const; // Возвращает сложность монстра
+	Difficulty getDifficulty() const; // Р’РѕР·РІСЂР°С‰Р°РµС‚ СЃР»РѕР¶РЅРѕСЃС‚СЊ РјРѕРЅСЃС‚СЂР°
 
 private:
-	Difficulty m_difficulty; // Сложность монстра
+	Difficulty m_difficulty; // РЎР»РѕР¶РЅРѕСЃС‚СЊ РјРѕРЅСЃС‚СЂР°
 
-	void UpdateSprites(); // Добавляет спрайты по уровню сложности монстра
+	void UpdateSprites(); // Р”РѕР±Р°РІР»СЏРµС‚ СЃРїСЂР°Р№С‚С‹ РїРѕ СѓСЂРѕРІРЅСЋ СЃР»РѕР¶РЅРѕСЃС‚Рё РјРѕРЅСЃС‚СЂР°
 
-	QVector<QPixmap> Frames; // Вектор спрайтов
+	QVector<QPixmap> Frames; // Р’РµРєС‚РѕСЂ СЃРїСЂР°Р№С‚РѕРІ
 
-	QPixmap idleRight; // Смотрит вправо
-	QPixmap idleLeft;  // Смотрит влево
+	QPixmap idleRight; // РЎРјРѕС‚СЂРёС‚ РІРїСЂР°РІРѕ
+	QPixmap idleLeft;  // РЎРјРѕС‚СЂРёС‚ РІР»РµРІРѕ
 
-	QTimer* animationTimer; // Таймер анимации
+	QTimer* animationTimer; // РўР°Р№РјРµСЂ Р°РЅРёРјР°С†РёРё
 
-	int m_currentFrame; // Индекс текущей картинки в векторе 
+	int m_currentFrame; // РРЅРґРµРєСЃ С‚РµРєСѓС‰РµР№ РєР°СЂС‚РёРЅРєРё РІ РІРµРєС‚РѕСЂРµ 
 
-	bool m_animationForward = true; // Монстр поворачивается вперет (true) или назад (false)
+	bool m_animationForward = true; // РњРѕРЅСЃС‚СЂ РїРѕРІРѕСЂР°С‡РёРІР°РµС‚СЃСЏ РІРїРµСЂРµС‚ (true) РёР»Рё РЅР°Р·Р°Рґ (false)
 };

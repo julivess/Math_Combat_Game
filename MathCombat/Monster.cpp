@@ -1,4 +1,4 @@
-#include "Monster.h"
+п»ї#include "Monster.h"
 
 
 Monster::Monster(Difficulty diff, QObject* parent)
@@ -6,15 +6,15 @@ Monster::Monster(Difficulty diff, QObject* parent)
 {
 	m_currentFrame = 0;
 
-	// Спрайты в зависимости от сложности
+	// РЎРїСЂР°Р№С‚С‹ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СЃР»РѕР¶РЅРѕСЃС‚Рё
 	UpdateSprites();
 
-	// Начальная картинка монмтра
+	// РќР°С‡Р°Р»СЊРЅР°СЏ РєР°СЂС‚РёРЅРєР° РјРѕРЅРјС‚СЂР°
 	setPixmap(idleRight);
 
 	animationTimer = new QTimer(this);
 
-	// Таймер для обновления картинок монстра (Обновляется как только истекает timeout)
+	// РўР°Р№РјРµСЂ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РєР°СЂС‚РёРЅРѕРє РјРѕРЅСЃС‚СЂР° (РћР±РЅРѕРІР»СЏРµС‚СЃСЏ РєР°Рє С‚РѕР»СЊРєРѕ РёСЃС‚РµРєР°РµС‚ timeout)
 	connect(animationTimer, &QTimer::timeout, this, &Monster::nextFrame);
 }
 
@@ -30,10 +30,10 @@ void Monster::startAnimation()
 
 void Monster::stopAnimation()
 {
-	animationTimer->stop(); // останавливает таймер
+	animationTimer->stop(); // РѕСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ С‚Р°Р№РјРµСЂ
 }
 
-// Меняет картинки в порядке 1 -> 2 -> 3 -> 4 -> 5 -> 4 -> 3 -> 2 -> 1 -> ... и т.д.
+// РњРµРЅСЏРµС‚ РєР°СЂС‚РёРЅРєРё РІ РїРѕСЂСЏРґРєРµ 1 -> 2 -> 3 -> 4 -> 5 -> 4 -> 3 -> 2 -> 1 -> ... Рё С‚.Рґ.
 void Monster::nextFrame()
 {
 	setPixmap(Frames[m_currentFrame]);
@@ -63,7 +63,7 @@ Difficulty Monster::getDifficulty() const
 	return m_difficulty;
 }
 
-/// Для каждого уровня сложности свой внешний вид монстра
+/// Р”Р»СЏ РєР°Р¶РґРѕРіРѕ СѓСЂРѕРІРЅСЏ СЃР»РѕР¶РЅРѕСЃС‚Рё СЃРІРѕР№ РІРЅРµС€РЅРёР№ РІРёРґ РјРѕРЅСЃС‚СЂР°
 void Monster::UpdateSprites()
 {
 	switch (m_difficulty) {

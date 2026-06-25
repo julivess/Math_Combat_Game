@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #include <QWidget>
 #include <QString>
@@ -10,8 +10,8 @@
 
 namespace Ui { class TaskWidgetClass; }
 
-// Класс окна с математическими примерами.
-// Имеет 3 уровня сложности 
+// РљР»Р°СЃСЃ РѕРєРЅР° СЃ РјР°С‚РµРјР°С‚РёС‡РµСЃРєРёРјРё РїСЂРёРјРµСЂР°РјРё.
+// РРјРµРµС‚ 3 СѓСЂРѕРІРЅСЏ СЃР»РѕР¶РЅРѕСЃС‚Рё 
 class TaskWidget : public QWidget
 {
 	Q_OBJECT
@@ -21,22 +21,22 @@ public:
 	TaskWidget(QWidget* parent = nullptr);
 	~TaskWidget();
 
-	void ShowTaskByDifficultyLevel(Difficulty leve); // Показать пример с заданным уровнем сложности 
+	void ShowTaskByDifficultyLevel(Difficulty leve); // РџРѕРєР°Р·Р°С‚СЊ РїСЂРёРјРµСЂ СЃ Р·Р°РґР°РЅРЅС‹Рј СѓСЂРѕРІРЅРµРј СЃР»РѕР¶РЅРѕСЃС‚Рё 
 
 private slots:
-	void CheckingResponse(); // Проверить ответ пользователя
+	void CheckingResponse(); // РџСЂРѕРІРµСЂРёС‚СЊ РѕС‚РІРµС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
 
 signals:
-	void FightIsOver(bool result); // Сигнал отправляется после проверки ответа
-	// (result = true - Пользователь ответил правильно)
-	// (result = false - Пользователь ответил неправильно)
+	void FightIsOver(bool result); // РЎРёРіРЅР°Р» РѕС‚РїСЂР°РІР»СЏРµС‚СЃСЏ РїРѕСЃР»Рµ РїСЂРѕРІРµСЂРєРё РѕС‚РІРµС‚Р°
+	// (result = true - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕС‚РІРµС‚РёР» РїСЂР°РІРёР»СЊРЅРѕ)
+	// (result = false - РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ РѕС‚РІРµС‚РёР» РЅРµРїСЂР°РІРёР»СЊРЅРѕ)
 
 private:
-	void ShowEasyTask(); // Показать простой пример
-	void ShowMediumtask(); // Показать пример средней сложности
-	void ShowHardTask();   // Показать сложный пример
+	void ShowEasyTask(); // РџРѕРєР°Р·Р°С‚СЊ РїСЂРѕСЃС‚РѕР№ РїСЂРёРјРµСЂ
+	void ShowMediumtask(); // РџРѕРєР°Р·Р°С‚СЊ РїСЂРёРјРµСЂ СЃСЂРµРґРЅРµР№ СЃР»РѕР¶РЅРѕСЃС‚Рё
+	void ShowHardTask();   // РџРѕРєР°Р·Р°С‚СЊ СЃР»РѕР¶РЅС‹Р№ РїСЂРёРјРµСЂ
 
-	Difficulty currentDifficulty = Difficulty::Easy; // Уровень сложности текущего примера
+	Difficulty currentDifficulty = Difficulty::Easy; // РЈСЂРѕРІРµРЅСЊ СЃР»РѕР¶РЅРѕСЃС‚Рё С‚РµРєСѓС‰РµРіРѕ РїСЂРёРјРµСЂР°
 
 
 	const std::vector<std::pair<QString, QString>> m_tasksEasy =
