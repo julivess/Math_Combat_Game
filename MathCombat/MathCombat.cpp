@@ -22,6 +22,8 @@ MathCombat::MathCombat(QWidget* parent)
 	ui->stackedWidget->setCurrentWidget(ui->previewWidget);
 	connect(ui->previewWidget, &PreviewWidget::StartNewGame, this, &MathCombat::StartNewGame);
 	connect(ui->taskWidget, &TaskWidget::FightIsOver, this, &MathCombat::EndCombat);
+	connect(ui->taskWidget, &TaskWidget::Exit, this, &MathCombat::ShowPreview);
+	connect(ui->taskWidget, &TaskWidget::RestartLevel, this, &MathCombat::RestartLevel);
 }
 
 MathCombat::~MathCombat()
@@ -113,7 +115,6 @@ void MathCombat::ShowCongratulation()
 	layout->addWidget(label);
 	layout->addWidget(closeButton, 0, Qt::AlignCenter);
 
-
 	// Показываем диалог
 	dialog->exec();
 
@@ -135,9 +136,30 @@ void MathCombat::EndCombat(bool result)
 	{
 		ContinueGame();
 	}
-	else {
-		ShowErrorDialog();
+	
+}
+
+void MathCombat::ShowPreview()
+{
+	ui->stackedWidget->setCurrentWidget(ui->previewWidget);
+}
+
+void MathCombat::RestartLevel()
+{
+	if (currentLevel == 1)
+	{
+		ShowFirstLevel();
 	}
+	if (currentLevel == 2)
+	{
+		ShowSecondLevel();
+	}
+	if (currentLevel == 3)
+	{
+		ShowThirdLevel();
+	}
+	ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
+
 }
 
 void MathCombat::ContinueGame()
@@ -171,44 +193,6 @@ void MathCombat::ContinueGame()
 		}
 	}
 	ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
-}
-
-void MathCombat::ShowErrorDialog()
-{
-	QMessageBox msgBox;
-	msgBox.setIcon(QMessageBox::Critical);
-	msgBox.setWindowTitle("Ошибка!");
-	msgBox.setText("Произошла ошибка в игре!");
-	msgBox.setInformativeText("Что вы хотите сделать?");
-
-	// Создаём кнопки
-	QPushButton* restartBtn = msgBox.addButton("Начать заново", QMessageBox::AcceptRole);
-	QPushButton* exitBtn = msgBox.addButton("Выход", QMessageBox::RejectRole);
-
-	msgBox.setDefaultButton(restartBtn);
-
-	// Показываем диалог и обрабатываем выбор
-	msgBox.exec();
-
-	if (msgBox.clickedButton() == restartBtn) {
-		// Перезапуск игры
-		if (currentLevel == 1) {
-			ShowFirstLevel();
-		}
-		else if (currentLevel == 2)
-		{
-			ShowSecondLevel();
-		}
-		else if (currentLevel == 3)
-		{
-			ShowThirdLevel();
-		}
-		ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
-	}
-	else if (msgBox.clickedButton() == exitBtn) {
-		// Переключение на другой стек виджет
-		ui->stackedWidget->setCurrentWidget(ui->previewWidget);
-	}
 }
 
 void MathCombat::StartNewGame()

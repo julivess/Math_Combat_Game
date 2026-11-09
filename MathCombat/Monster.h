@@ -34,10 +34,9 @@ private:
 
 	QPixmap idleRight; // Смотрит вправо
 	QPixmap idleLeft;  // Смотрит влево
-
 	QTimer* animationTimer; // Таймер анимации
 
 	int m_currentFrame; // Индекс текущей картинки в векторе 
 
-	bool m_animationForward = true; // Монстр поворачивается вперет (true) или назад (false)
+	bool m_animationForward = true; // Монстр поворачивается вперед (true) или назад (false)
 };

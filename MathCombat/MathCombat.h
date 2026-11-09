@@ -34,10 +34,11 @@ public slots:
 	void StartNewGame(); // Начинает новую игру с первого уровня
 	void StartCombat(Difficulty diff); // Начинает математический бой с заданным уровнем сложности
 	void EndCombat(bool result);  // Обрабатывает результат боя
+	void ShowPreview();
+	void RestartLevel();
 
 private:
 	void ContinueGame(); // Продолжить игру
-	void ShowErrorDialog(); // Показывает диалог об ошибке, если пользователь ввел неправильный ответ
 
 	int currentLevel = 1; // текущий уровень игры
 

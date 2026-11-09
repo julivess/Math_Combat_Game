@@ -26,7 +26,10 @@ public:
 private slots:
 	void CheckingResponse(); // Проверить ответ пользователя
 
+
 signals:
+	void RestartLevel();
+	void Exit();
 	void FightIsOver(bool result); // Сигнал отправляется после проверки ответа
 	// (result = true - Пользователь ответил правильно)
 	// (result = false - Пользователь ответил неправильно)
@@ -45,7 +48,8 @@ private:
 		{"84 - 39 = ", "45"},
 		{"12 * 8 = ", "96"},
 		{"144 / 12 = ", "12"},
-		{"7 + 3 * 4 =", "19"}
+		{"7 + 3 * 4 =", "19"},
+		{"67 + 52 =", "119"}
 	};
 
 	const std::vector<std::pair<QString, QString>> m_tasksMedium =
@@ -54,7 +58,7 @@ private:
 		{"ln(e^5) = ", "5"},
 		{"sin(90) = ", "1"},
 		{"cos(0) = ", "1"},
-		{"log_5(25) + log_5(5) = ", "3"}
+		{"log5(25) + log5(5) = ", "3"}
 	};
 
 	const std::vector<std::pair<QString, QString>> m_tasksHard =
@@ -63,10 +67,6 @@ private:
 		{"f(x) = e^2x, f'(0) = ", "2"},
 		{"f(x) = ln(3x + 1), f'(1) = ", "0.75"}
 	};
-
-	int m_easyInd = 0;
-	int m_mediumInd = 0;
-	int m_hardInd = 0;
 
 	Ui::TaskWidgetClass* ui;
 
