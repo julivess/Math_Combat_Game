@@ -5,6 +5,9 @@
 #include "Utils.h"
 #include "GameScene.h"
 
+#include <QSettings>
+#include <QLabel>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MathCombatClass; };
@@ -38,11 +41,32 @@ public slots:
 	void RestartLevel();
 
 private:
+	QWidget* m_hud = nullptr;
+
+	QLabel* m_levelLabel = nullptr;
+	QLabel* m_livesLabel = nullptr;
+
+	void CreateHUD();
+	void UpdateHUD();
+	void UpdateHUDGeometry();
+	
+	int lives = 3;
+	const int MAX_LIVES = 3;
+
+
+	bool hasSavedProgress = false;
+
+	void SaveProgress();
+	void LoadProgress();
+	void GameOver();
+	void ContinueSavedGame();
+
+
 	void ContinueGame(); // Продолжить игру
 
 	int currentLevel = 1; // текущий уровень игры
 
-	GameScene* m_scene; // сцена
+	GameScene* m_scene = nullptr; // сцена
 
 	Ui::MathCombatClass* ui;
 };

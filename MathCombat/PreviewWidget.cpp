@@ -7,6 +7,9 @@ PreviewWidget::PreviewWidget(QWidget* parent)
 	, ui(new Ui::PreviewWidgetClass())
 {
 	ui->setupUi(this);
+  connect(ui->buttonContinue, &QPushButton::clicked, this, &PreviewWidget::ContinueSavedGame);
+
+  ui->buttonContinue->hide();
 
   //обработка нажатий на кнопки 
 	connect(ui->buttonMewPlay, &QPushButton::clicked, this, &PreviewWidget::StartNewGame);
@@ -71,4 +74,9 @@ void PreviewWidget::ShowRules()
     
     // Автоматическое удаление после закрытия
     dialog->deleteLater();
+}
+
+void PreviewWidget::SetContinueVisible(bool visible)
+{
+  ui->buttonContinue->setVisible(visible);
 }

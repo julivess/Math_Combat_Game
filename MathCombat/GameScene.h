@@ -29,6 +29,9 @@ public:
 	bool AllMonstersDefeated(); // Вернет true если все монстры на сцене были побеждены
 	void ContinueGame(); // Продолжит игру после победы над монстром
 
+	void ResolveCombat(bool result);
+
+	int GetNumberDefeatedMonsters();
 signals:
 	void CombatSignal(Difficulty diff); //Сигнал о том что начался бой. diff - уровень сложности монстра. 
 	//Отправляется когда происходит столкновение с монстром

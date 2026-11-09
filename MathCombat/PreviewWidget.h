@@ -16,10 +16,11 @@ public:
 	PreviewWidget(QWidget* parent = nullptr);
 	~PreviewWidget();
 	void ShowRules();
+	void SetContinueVisible(bool visible);
 
 signals:
 	void StartNewGame();//Сигнал, что пользователь нажал на кнопку Начать новую игру
-
+  void ContinueSavedGame();
 private:
 	Ui::PreviewWidgetClass* ui;
 };

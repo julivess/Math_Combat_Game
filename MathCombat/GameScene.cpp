@@ -100,7 +100,7 @@ void GameScene::updateGame()
 			// Это нужно что бы он перестал отображаться на сцене, если его победят
 
 			m_gameTimer->stop(); // Останавливаем таймер для обновления игры
-			numberDefeatedMonsters++; // Считаем монстра побежденным (Мы не вернемся на эту сцену в случае поражения пользователя)
+			//numberDefeatedMonsters++; // Считаем монстра побежденным (Мы не вернемся на эту сцену в случае поражения пользователя)
 			m_combatBegin = true; // Флаг что бой начался. Нажатия на клавиутуру не обрабатываются во время боя
 			m_movingLeft = false; // Нет движения вправо
 			m_movingRight = false; // нет движения влево
@@ -186,4 +186,17 @@ void GameScene::ContinueGame()
 	m_combatBegin = false; // Бой закончился (снова обрабатывает собития с клавиатуры)
 
 	m_gameTimer->start(); // Снова запускаем таймер
+}
+
+void GameScene::ResolveCombat(bool result)
+{
+	if (result)
+  {
+		numberDefeatedMonsters++;
+  }
+}
+
+int GameScene::GetNumberDefeatedMonsters()
+{
+	return numberDefeatedMonsters;
 }

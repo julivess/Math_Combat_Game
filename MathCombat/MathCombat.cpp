@@ -2,12 +2,22 @@
 #include <QMessageBox>
 #include <QScreen>
 #include <QDialog>
+#include <QSettings>
+#include <QLabel>
+#include <QMessageBox>
+#include <QVBoxLayout>
 
 MathCombat::MathCombat(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MathCombatClass())
 {
 	ui->setupUi(this);
+
+	LoadProgress();
+
+	ui->previewWidget->SetContinueVisible(hasSavedProgress);
+
+	connect(ui->previewWidget, &PreviewWidget::ContinueSavedGame, this, &MathCombat::ContinueSavedGame);
 
 	// Нужно чтобы сцена получала события с клавиатуры
 
@@ -18,6 +28,8 @@ MathCombat::MathCombat(QWidget* parent)
 
 	ui->graphicsView->setResizeAnchor(QGraphicsView::NoAnchor);
 
+	CreateHUD();
+	UpdateHUD();
 
 	ui->stackedWidget->setCurrentWidget(ui->previewWidget);
 	connect(ui->previewWidget, &PreviewWidget::StartNewGame, this, &MathCombat::StartNewGame);
@@ -47,6 +59,7 @@ void MathCombat::ShowFirstLevel()
 	m_scene = new GameScene({ {new Monster(Difficulty::Easy), QPointF{900, 485}} }, ":/MathCombat/Resource/Level1.png", QPoint{ 120, 550 }, this);
 	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
 	ui->graphicsView->setScene(m_scene);
+	UpdateHUD();
 
 }
 
@@ -65,6 +78,7 @@ void MathCombat::ShowSecondLevel()
 
 	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
 	ui->graphicsView->setScene(m_scene);
+	UpdateHUD();
 }
 
 void MathCombat::ShowThirdLevel()
@@ -80,6 +94,7 @@ void MathCombat::ShowThirdLevel()
 
 	connect(m_scene, &GameScene::CombatSignal, this, &MathCombat::StartCombat);
 	ui->graphicsView->setScene(m_scene);
+	UpdateHUD();
 
 }
 
@@ -128,15 +143,29 @@ void MathCombat::StartCombat(Difficulty diff)
 {
 	ui->stackedWidget->setCurrentWidget(ui->taskWidget);
 	ui->taskWidget->ShowTaskByDifficultyLevel(diff);
+	UpdateHUD();
 }
 
 void MathCombat::EndCombat(bool result)
 {
-	if (result)
-	{
-		ContinueGame();
-	}
-	
+   if (result)
+   {
+       m_scene->ResolveCombat(true);
+			 UpdateHUD();
+       ContinueGame();
+   }
+   else
+   {
+       lives--;
+       UpdateHUD();
+       SaveProgress();
+
+       if (lives <= 0)
+       {
+           GameOver();
+       }
+   }
+	 
 }
 
 void MathCombat::ShowPreview()
@@ -150,16 +179,192 @@ void MathCombat::RestartLevel()
 	{
 		ShowFirstLevel();
 	}
-	if (currentLevel == 2)
+	else if (currentLevel == 2)
 	{
 		ShowSecondLevel();
 	}
-	if (currentLevel == 3)
+	else if (currentLevel == 3)
 	{
 		ShowThirdLevel();
 	}
+	
+	SaveProgress();
 	ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
+}
 
+void MathCombat::CreateHUD()
+{
+    m_hud = new QWidget(ui->graphicsView);
+    m_hud->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    QHBoxLayout* layout = new QHBoxLayout(m_hud);
+    layout->setContentsMargins(15, 10, 15, 10);
+    layout->setSpacing(20);
+
+    m_levelLabel = new QLabel(m_hud);
+    m_levelLabel->setProperty("style_type", "LEVEL_LABEL");
+    m_levelLabel->setMinimumSize(180, 45);
+    m_levelLabel->setAlignment(Qt::AlignCenter);
+
+   
+
+    m_livesLabel = new QLabel(m_hud);
+    m_livesLabel->setProperty("style_type", "LIVES_LABEL");
+    m_livesLabel->setMinimumSize(180, 45);
+    m_livesLabel->setAlignment(Qt::AlignCenter);
+
+    layout->addWidget(m_levelLabel);
+    layout->addStretch();
+    layout->addWidget(m_livesLabel);
+
+    UpdateHUDGeometry();
+
+    m_hud->show();
+    m_hud->raise();
+
+    UpdateHUD();
+}
+
+void MathCombat::UpdateHUD()
+{
+	m_levelLabel->setText(" УРОВЕНЬ: " + QString::number(currentLevel));
+  QString hearts;
+
+   for (int i = 0; i < MAX_LIVES; i++)
+   {
+      if (i < lives)
+          hearts += "♥ ";
+      else
+          hearts += "♡ ";
+   }
+
+   m_livesLabel->setText("ЖИЗНИ: " + hearts);
+}
+
+void MathCombat::UpdateHUDGeometry()
+{
+	if (!m_hud)
+		return;
+  m_hud->setGeometry(0, 0, 600, 75);
+
+  m_hud->raise();
+}
+
+void MathCombat::SaveProgress()
+{
+	 QSettings settings("MathCombat", "Game");
+
+   settings.setValue("currentLevel", currentLevel);
+   settings.setValue("lives", lives);
+   settings.setValue("hasProgress", true);
+
+   settings.sync();
+
+	 hasSavedProgress = true;
+	 ui->previewWidget->SetContinueVisible(true);
+}
+
+void MathCombat::LoadProgress()
+{
+	 QSettings settings("MathCombat", "Game");
+
+   hasSavedProgress =
+       settings.value("hasProgress", false).toBool();
+
+   currentLevel =
+       settings.value("currentLevel", 1).toInt();
+
+   lives =
+       settings.value("lives", MAX_LIVES).toInt();
+
+   if (currentLevel < 1 || currentLevel > 3 ||
+       lives < 1 || lives > MAX_LIVES)
+   {
+       currentLevel = 1;
+       lives = MAX_LIVES;
+       hasSavedProgress = false;
+   }
+}
+
+void MathCombat::GameOver()
+{
+    // Удаляем сохранённый прогресс
+    QSettings settings("MathCombat", "Game");
+    settings.clear();
+    settings.sync();
+
+    hasSavedProgress = false;
+    ui->previewWidget->SetContinueVisible(false);
+
+    // Создаём диалог
+    QDialog dialog(this);
+    dialog.setWindowTitle("Игра окончена");
+    dialog.setFixedSize(420, 280);
+    dialog.setModal(true);
+
+
+    // Основной текст
+    QLabel* message = new QLabel(
+        "У вас закончились жизни!\n"
+        "Попробуйте ещё раз!",
+        &dialog
+    );
+
+    message->setProperty("style_type", "RULE_LABEL");
+    message->setAlignment(Qt::AlignCenter);
+    message->setWordWrap(true);
+
+    // Кнопка возврата в меню
+    QPushButton* menuButton = new QPushButton(
+        "ВЕРНУТЬСЯ В МЕНЮ", &dialog
+    );
+
+    menuButton->setProperty("style_type", "ANSWER_BUTTON");
+    menuButton->setCursor(Qt::PointingHandCursor);
+
+    connect(menuButton, &QPushButton::clicked,
+        &dialog, &QDialog::accept);
+
+    // Расположение элементов
+    QVBoxLayout* layout = new QVBoxLayout(&dialog);
+    layout->setContentsMargins(25, 50, 25, 50);
+    layout->setSpacing(22);
+
+    layout->addWidget(message);
+    layout->addStretch();
+    layout->addWidget(menuButton);
+
+
+    // Показываем диалог и ждём его закрытия
+    dialog.exec();
+
+    // Сбрасываем прогресс текущей игры
+    lives = MAX_LIVES;
+    currentLevel = 1;
+
+		UpdateHUD();
+
+    // Возвращаем игрока в главное меню
+    ui->stackedWidget->setCurrentWidget(ui->previewWidget);
+}
+
+void MathCombat::ContinueSavedGame()
+{
+	if (!hasSavedProgress)
+		return;
+
+  if (currentLevel == 1)
+		ShowFirstLevel();
+
+	else if (currentLevel == 2)
+    ShowSecondLevel();
+
+	else if (currentLevel == 3)
+		ShowThirdLevel();
+
+   UpdateHUD();
+
+    ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
 }
 
 void MathCombat::ContinueGame()
@@ -169,6 +374,7 @@ void MathCombat::ContinueGame()
 		bool thisLevelPassed = IsLevelPassed();
 		if (thisLevelPassed) {
 			ShowSecondLevel();
+			SaveProgress();
 		}
 	}
 	if (currentLevel == 2)
@@ -177,6 +383,7 @@ void MathCombat::ContinueGame()
 		if (thisLevelPassed)
 		{
 			ShowThirdLevel();
+			SaveProgress();
 		}
 		else {
 			m_scene->ContinueGame();
@@ -189,6 +396,7 @@ void MathCombat::ContinueGame()
 		{
 			ShowCongratulation();
 			ui->stackedWidget->setCurrentWidget(ui->previewWidget);
+			ui->previewWidget->SetContinueVisible(false);
 			return;
 		}
 	}
@@ -197,7 +405,19 @@ void MathCombat::ContinueGame()
 
 void MathCombat::StartNewGame()
 {
-	ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
-	ShowFirstLevel();
+	lives = MAX_LIVES;
+  currentLevel = 1;
+
+  hasSavedProgress = false;
+
+  QSettings settings("MathCombat", "Game");
+  settings.clear();
+
+  SaveProgress();
+  UpdateHUD();
+
+  ui->stackedWidget->setCurrentWidget(ui->levelsWidget);
+
+  ShowFirstLevel();
 }
 

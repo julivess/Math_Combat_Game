@@ -310,3 +310,54 @@ QDialog
    border-bottom: 8px solid #1d1530;
    border-radius: 14px;
 }
+QLabel[style_type="LIVES_LABEL"]
+{
+    background-color: #211735;
+
+    border: 3px solid #80649d;
+    border-bottom: 5px solid #120b20;
+
+    border-radius: 10px;
+
+    color: #ff527c;
+
+    font-family: "Press Start 2P";
+    font-size: 18px;
+    font-weight: bold;
+
+    padding: 10px 16px;
+
+    min-width: 240px;
+    min-height: 40px;
+
+    qproperty-alignment: AlignCenter;
+}
+
+/* Когда осталась одна жизнь */
+QLabel[style_type="LIVES_LABEL"][lowLives="true"]
+{
+    background-color: #351525;
+
+    border: 3px solid #ff526b;
+    border-bottom: 5px solid #801d3c;
+
+    color: #ff405f;
+}
+
+QLabel[style_type="LEVEL_LABEL"] {
+    background-color: #211735;
+    border: 3px solid #b18ad6;
+    border-bottom: 5px solid #120b20;
+    border-radius: 10px;
+    color: #f3d18a;
+
+    font-family: "Press Start 2P";
+    font-size: 18px;
+    font-weight: bold;
+
+    padding: 10px 14px;
+    min-width: 180px;
+    min-height: 40px;
+
+    qproperty-alignment: AlignCenter;
+}
