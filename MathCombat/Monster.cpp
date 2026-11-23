@@ -1,8 +1,7 @@
 ﻿#include "Monster.h"
 
 
-Monster::Monster(Difficulty diff, QObject* parent)
-	: QObject(parent), m_difficulty(diff)
+Monster::Monster(Difficulty diff, QObject* parent) : QObject(parent), m_difficulty(diff)
 {
 	m_currentFrame = 0;
 

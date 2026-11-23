@@ -5,6 +5,7 @@
 #include <QTimer>
 #include <QKeyEvent>
 #include <QPointF>
+#include <QSoundEffect>
 
 #include "Player.h"
 #include "Monster.h"
@@ -52,6 +53,8 @@ private:
 	std::vector<std::pair<Monster*, QPointF>> m_vectorMonsters;  // Вектор всех монстров на сцене
 
 	int numberDefeatedMonsters = 0; // количество побежденных монстров 
+
+	QSoundEffect* m_walkingSound;
 };
 
 #endif // GAMESCENE_H

@@ -2,19 +2,27 @@
 #include <QLabel>
 #include <QPushButton>
 
-PreviewWidget::PreviewWidget(QWidget* parent)
-	: QWidget(parent)
-	, ui(new Ui::PreviewWidgetClass())
+PreviewWidget::PreviewWidget(QWidget* parent) : QWidget(parent) , ui(new Ui::PreviewWidgetClass())
 {
 	ui->setupUi(this);
   connect(ui->buttonContinue, &QPushButton::clicked, this, &PreviewWidget::ContinueSavedGame);
 
   ui->buttonContinue->hide();
 
+  m_clickSound = new QSoundEffect(this);
+  m_clickSound->setSource(QUrl("qrc:/MathCombat/Resource/Music/buttonClick.wav"));
+  m_clickSound->setVolume(0.5f);
+
+  connect(ui->buttonMewPlay,  &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
+	connect(ui->buttonRules,    &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
+  connect(ui->buttonExit,     &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
+  connect(ui->buttonContinue, &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
+
   //обработка нажатий на кнопки 
-	connect(ui->buttonMewPlay, &QPushButton::clicked, this, &PreviewWidget::StartNewGame);
-	connect(ui->buttonRules, &QPushButton::clicked, this, &PreviewWidget::ShowRules);
-  connect(ui->buttonExit, &QPushButton::clicked, qApp, &QApplication::quit);
+	connect(ui->buttonMewPlay,  &QPushButton::clicked, this, &PreviewWidget::StartNewGame);
+	connect(ui->buttonRules,    &QPushButton::clicked, this, &PreviewWidget::ShowRules);
+  connect(ui->buttonExit,     &QPushButton::clicked, qApp, &QApplication::quit);
+
 }
 
 PreviewWidget::~PreviewWidget()
@@ -26,7 +34,6 @@ PreviewWidget::~PreviewWidget()
 void PreviewWidget::ShowRules()
 {
 	  QDialog *dialog = new QDialog(this);
-    //dialog->setWindowTitle("Правил");
     dialog->setFixedSize(700, 750);
     dialog->setModal(true);
     
@@ -35,7 +42,6 @@ void PreviewWidget::ShowRules()
     layout->setSpacing(20);
     layout->setContentsMargins(30, 30, 30, 30);
     
-    // Текст поздравления
     QString congratulationText = 
     "ПРАВИЛА ИГРЫ\n\n"
     "Добро пожаловать в MATH COMBAT!\n\n"
@@ -62,8 +68,8 @@ void PreviewWidget::ShowRules()
     closeButton->setFixedSize(200, 70);
     closeButton->setProperty("style_type", "ANSWER_BUTTON");
     // Подключаем кнопку к закрытию диалога
-    QObject::connect(closeButton, &QPushButton::clicked, dialog, &QDialog::accept);
-    
+    QObject::connect(closeButton, &QPushButton::clicked, dialog,       &QDialog::accept);
+    QObject::connect(closeButton, &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
     // Добавляем виджеты в layout
     layout->addWidget(label);
     layout->addWidget(closeButton, 0, Qt::AlignCenter);

@@ -1,8 +1,10 @@
 ﻿#pragma once
 
 #include <QWidget>
-#include "ui_PreviewWidget.h"
 #include <QDialog>
+#include <QSoundEffect>
+
+#include "ui_PreviewWidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class PreviewWidgetClass; };
@@ -23,4 +25,6 @@ signals:
   void ContinueSavedGame();
 private:
 	Ui::PreviewWidgetClass* ui;
+
+	QSoundEffect* m_clickSound = nullptr;
 };

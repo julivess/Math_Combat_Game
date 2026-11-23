@@ -6,10 +6,9 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QVBoxLayout>
+#include <QTimer>
 
-MathCombat::MathCombat(QWidget* parent)
-	: QMainWindow(parent)
-	, ui(new Ui::MathCombatClass())
+MathCombat::MathCombat(QWidget* parent) : QMainWindow(parent), ui(new Ui::MathCombatClass())
 {
 	ui->setupUi(this);
 
@@ -33,9 +32,25 @@ MathCombat::MathCombat(QWidget* parent)
 
 	ui->stackedWidget->setCurrentWidget(ui->previewWidget);
 	connect(ui->previewWidget, &PreviewWidget::StartNewGame, this, &MathCombat::StartNewGame);
-	connect(ui->taskWidget, &TaskWidget::FightIsOver, this, &MathCombat::EndCombat);
-	connect(ui->taskWidget, &TaskWidget::Exit, this, &MathCombat::ShowPreview);
-	connect(ui->taskWidget, &TaskWidget::RestartLevel, this, &MathCombat::RestartLevel);
+	connect(ui->taskWidget,    &TaskWidget::FightIsOver, this, &MathCombat::EndCombat);
+	connect(ui->taskWidget,    &TaskWidget::Exit, this, &MathCombat::ShowPreview);
+	connect(ui->taskWidget,    &TaskWidget::RestartLevel, this, &MathCombat::RestartLevel);
+
+	
+	m_clickSound = new QSoundEffect(this);
+  m_clickSound->setSource(QUrl("qrc:/MathCombat/Resource/Music/buttonClick.wav"));
+  m_clickSound->setVolume(0.5f);
+
+	m_victorySound = new QSoundEffect(this);
+  m_victorySound->setSource(QUrl("qrc:/MathCombat/Resource/Music/Victory.wav"));
+
+	m_defeat = new QSoundEffect(this);
+  m_defeat->setSource(QUrl("qrc:/MathCombat/Resource/Music/defeat.wav"));
+
+	m_lossLifeSound = new QSoundEffect(this);
+	m_lossLifeSound->setSource(QUrl("qrc:/MathCombat/Resource/Music/lossLife.wav"));
+	m_lossLifeSound->setVolume(0.3f);
+
 }
 
 MathCombat::~MathCombat()
@@ -124,13 +139,15 @@ void MathCombat::ShowCongratulation()
 	closeButton->setFixedSize(200, 70);
 	closeButton->setProperty("style_type", "ANSWER_BUTTON");
 	// Подключаем кнопку к закрытию диалога
-	QObject::connect(closeButton, &QPushButton::clicked, dialog, &QDialog::accept);
+	QObject::connect(closeButton, &QPushButton::clicked, dialog,       &QDialog::accept);
+	QObject::connect(closeButton, &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
 
 	// Добавляем виджеты в layout
 	layout->addWidget(label);
 	layout->addWidget(closeButton, 0, Qt::AlignCenter);
 
 	// Показываем диалог
+	m_victorySound->play();
 	dialog->exec();
 
 	// Автоматическое удаление после закрытия
@@ -156,14 +173,22 @@ void MathCombat::EndCombat(bool result)
    }
    else
    {
-       lives--;
+       m_lives--;
        UpdateHUD();
        SaveProgress();
 
-       if (lives <= 0)
+       if (m_lives <= 0)
        {
-           GameOver();
-       }
+         GameOver();
+			 }
+			 else
+			 {
+				 QTimer::singleShot(300, this, [this]()
+				 {  // задержка 300 мс
+           if (m_lossLifeSound)
+					  m_lossLifeSound->play();
+         });
+			 }
    }
 	 
 }
@@ -206,8 +231,6 @@ void MathCombat::CreateHUD()
     m_levelLabel->setMinimumSize(180, 45);
     m_levelLabel->setAlignment(Qt::AlignCenter);
 
-   
-
     m_livesLabel = new QLabel(m_hud);
     m_livesLabel->setProperty("style_type", "LIVES_LABEL");
     m_livesLabel->setMinimumSize(180, 45);
@@ -232,10 +255,10 @@ void MathCombat::UpdateHUD()
 
    for (int i = 0; i < MAX_LIVES; i++)
    {
-      if (i < lives)
+      if (i < m_lives)
           hearts += "♥ ";
       else
-          hearts += "♡ ";
+          hearts += "○ ";
    }
 
    m_livesLabel->setText("ЖИЗНИ: " + hearts);
@@ -255,7 +278,7 @@ void MathCombat::SaveProgress()
 	 QSettings settings("MathCombat", "Game");
 
    settings.setValue("currentLevel", currentLevel);
-   settings.setValue("lives", lives);
+   settings.setValue("lives", m_lives);
    settings.setValue("hasProgress", true);
 
    settings.sync();
@@ -268,20 +291,16 @@ void MathCombat::LoadProgress()
 {
 	 QSettings settings("MathCombat", "Game");
 
-   hasSavedProgress =
-       settings.value("hasProgress", false).toBool();
+   hasSavedProgress = settings.value("hasProgress", false).toBool();
 
-   currentLevel =
-       settings.value("currentLevel", 1).toInt();
+   currentLevel = settings.value("currentLevel", 1).toInt();
 
-   lives =
-       settings.value("lives", MAX_LIVES).toInt();
+   m_lives = settings.value("lives", MAX_LIVES).toInt();
 
-   if (currentLevel < 1 || currentLevel > 3 ||
-       lives < 1 || lives > MAX_LIVES)
+   if (currentLevel < 1 || currentLevel > 3 || m_lives < 1 || m_lives > MAX_LIVES)
    {
        currentLevel = 1;
-       lives = MAX_LIVES;
+       m_lives = MAX_LIVES;
        hasSavedProgress = false;
    }
 }
@@ -315,16 +334,13 @@ void MathCombat::GameOver()
     message->setWordWrap(true);
 
     // Кнопка возврата в меню
-    QPushButton* menuButton = new QPushButton(
-        "ВЕРНУТЬСЯ В МЕНЮ", &dialog
-    );
+    QPushButton* menuButton = new QPushButton("ВЕРНУТЬСЯ В МЕНЮ", &dialog);
 
     menuButton->setProperty("style_type", "ANSWER_BUTTON");
     menuButton->setCursor(Qt::PointingHandCursor);
 
-    connect(menuButton, &QPushButton::clicked,
-        &dialog, &QDialog::accept);
-
+    connect(menuButton, &QPushButton::clicked, &dialog,      &QDialog::accept);
+    connect(menuButton, &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
     // Расположение элементов
     QVBoxLayout* layout = new QVBoxLayout(&dialog);
     layout->setContentsMargins(25, 50, 25, 50);
@@ -336,10 +352,11 @@ void MathCombat::GameOver()
 
 
     // Показываем диалог и ждём его закрытия
+		m_defeat->play();
     dialog.exec();
 
     // Сбрасываем прогресс текущей игры
-    lives = MAX_LIVES;
+    m_lives = MAX_LIVES;
     currentLevel = 1;
 
 		UpdateHUD();
@@ -405,7 +422,7 @@ void MathCombat::ContinueGame()
 
 void MathCombat::StartNewGame()
 {
-	lives = MAX_LIVES;
+	m_lives = MAX_LIVES;
   currentLevel = 1;
 
   hasSavedProgress = false;

@@ -1,15 +1,22 @@
 ﻿#include "TaskWidget.h"
 #include <QRandomGenerator>
 
-TaskWidget::TaskWidget(QWidget* parent)
-	: QWidget(parent)
-	, ui(new Ui::TaskWidgetClass())
+TaskWidget::TaskWidget(QWidget* parent) : QWidget(parent), ui(new Ui::TaskWidgetClass())
 {
 	ui->setupUi(this);
 
-	connect(ui->pushButton, &QPushButton::clicked, this, &TaskWidget::CheckingResponse);
-	connect(ui->pushButtonExit, &QPushButton::clicked, this, &TaskWidget::Exit);
+	m_clickSound = new QSoundEffect(this);
+  m_clickSound->setSource(QUrl("qrc:/MathCombat/Resource/Music/buttonClick.wav"));
+  m_clickSound->setVolume(0.5f);
+
+	connect(ui->pushButton,        &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
+	connect(ui->pushButtonExit,    &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
+	connect(ui->pushButtonNewGame, &QPushButton::clicked, m_clickSound, &QSoundEffect::play);
+
+	connect(ui->pushButton,        &QPushButton::clicked, this, &TaskWidget::CheckingResponse);
+	connect(ui->pushButtonExit,    &QPushButton::clicked, this, &TaskWidget::Exit);
 	connect(ui->pushButtonNewGame, &QPushButton::clicked, this, &TaskWidget::RestartLevel);
+
 }
 
 TaskWidget::~TaskWidget()

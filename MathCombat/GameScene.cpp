@@ -7,6 +7,12 @@ GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, Q
 	m_movingLeft = false;
 	m_movingRight = false;
 
+	// ===== Музыка ====
+	
+	m_walkingSound = new QSoundEffect(this);
+	m_walkingSound->setSource(QUrl("qrc:/MathCombat/Resource/Music/Walking.wav"));
+	m_walkingSound->setLoopCount(QSoundEffect::Infinite);
+
 	// ===== ФОН =====
 
 	QPixmap background(BackgroundTheme);
@@ -20,7 +26,6 @@ GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, Q
 	m_player->setPos(playerPos); // Задаем положение
 
 	// ===== МОНСТЕР =====
-	//m_monster = new Monster(Monster::Difficulty::Easy, this);
 
 	for (auto monster : m_vectorMonsters)
 	{
@@ -89,8 +94,6 @@ void GameScene::updateGame()
 
 		if (monster)
 		{
-			// ПРОИЗОШЛО СТОЛКНОВЕНИЕ С МОНСТРОМ 
-			qDebug() << "Столкновение!";
 
 			emit CombatSignal(monster->getDifficulty()); // Отправляем сигнал о том что произошло столкновение 
 			// с монстром сложности monster->getDifficulty() (Его поймает класс MathCombat)
@@ -100,10 +103,10 @@ void GameScene::updateGame()
 			// Это нужно что бы он перестал отображаться на сцене, если его победят
 
 			m_gameTimer->stop(); // Останавливаем таймер для обновления игры
-			//numberDefeatedMonsters++; // Считаем монстра побежденным (Мы не вернемся на эту сцену в случае поражения пользователя)
-			m_combatBegin = true; // Флаг что бой начался. Нажатия на клавиутуру не обрабатываются во время боя
-			m_movingLeft = false; // Нет движения вправо
-			m_movingRight = false; // нет движения влево
+			m_combatBegin = true;   // Флаг что бой начался. Нажатия на клавиутуру не обрабатываются во время боя
+			m_movingLeft  = false;  // Нет движения вправо
+			m_movingRight = false;  // нет движения влево
+			m_walkingSound->stop(); //останавливает звук ходьбы
 			return;
 		}
 	}
@@ -131,14 +134,22 @@ void GameScene::keyPressEvent(QKeyEvent* event)
 
 	if (event->key() == Qt::Key_D)
 	{
-		m_movingRight = true;
+  if (!m_movingRight)
+		{
+			m_walkingSound->play();
+			m_movingRight = true;
+		}
 	}
 
 	// ===== A =====
 
 	if (event->key() == Qt::Key_A)
 	{
-		m_movingLeft = true;
+		if (!m_movingLeft)
+		{
+			m_walkingSound->play();
+			m_movingLeft = true;
+		}
 	}
 
 
@@ -160,14 +171,22 @@ void GameScene::keyReleaseEvent(QKeyEvent* event)
 
 	if (event->key() == Qt::Key_D)
 	{
-		m_movingRight = false;
+		if (m_movingRight)
+		{
+			m_walkingSound->stop();
+			m_movingRight = false;
+		}
 	}
 
 	// ===== A =====
 
 	if (event->key() == Qt::Key_A)
 	{
-		m_movingLeft = false;
+		if (m_movingLeft)
+		{
+			m_walkingSound->stop();
+			m_movingLeft = false;
+		}
 	}
 
 	QGraphicsScene::keyReleaseEvent(event);

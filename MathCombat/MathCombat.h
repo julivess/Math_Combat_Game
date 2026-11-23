@@ -1,12 +1,13 @@
 ﻿#pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <QSettings>
+#include <QLabel>
+#include <QSoundEffect>
+
 #include "ui_MathCombat.h"
 #include "Utils.h"
 #include "GameScene.h"
-
-#include <QSettings>
-#include <QLabel>
 
 
 QT_BEGIN_NAMESPACE
@@ -50,7 +51,7 @@ private:
 	void UpdateHUD();
 	void UpdateHUDGeometry();
 	
-	int lives = 3;
+	int m_lives = 3;
 	const int MAX_LIVES = 3;
 
 
@@ -67,6 +68,11 @@ private:
 	int currentLevel = 1; // текущий уровень игры
 
 	GameScene* m_scene = nullptr; // сцена
+
+	QSoundEffect* m_clickSound = nullptr;
+	QSoundEffect* m_victorySound = nullptr;
+	QSoundEffect* m_defeat = nullptr;
+	QSoundEffect* m_lossLifeSound = nullptr;
 
 	Ui::MathCombatClass* ui;
 };

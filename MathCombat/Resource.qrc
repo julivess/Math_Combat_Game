@@ -30,5 +30,10 @@
         <file>Resource/MonsterRight2Hard.png</file>
         <file>Resource/MonsterRightHard.png</file>
         <file>Resource/Level3.png</file>
+        <file>Resource/Music/Walking.wav</file>
+        <file>Resource/Music/buttonClick.wav</file>
+        <file>Resource/Music/Victory.wav</file>
+        <file>Resource/Music/defeat.wav</file>
+        <file>Resource/Music/lossLife.wav</file>
     </qresource>
 </RCC>

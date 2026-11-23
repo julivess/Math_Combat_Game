@@ -1,12 +1,14 @@
 ﻿#pragma once
 
-#include <QWidget>
-#include <QString>
 #include "ui_TaskWidget.h"
 #include <map>
 #include <vector>
 #include <utility>
 #include "Utils.h"
+
+#include <QWidget>
+#include <QString>
+#include <QSoundEffect>
 
 namespace Ui { class TaskWidgetClass; }
 
@@ -41,6 +43,7 @@ private:
 
 	Difficulty currentDifficulty = Difficulty::Easy; // Уровень сложности текущего примера
 
+	QSoundEffect* m_clickSound = nullptr;
 
 	const std::vector<std::pair<QString, QString>> m_tasksEasy =
 	{
