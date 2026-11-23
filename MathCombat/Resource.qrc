@@ -35,5 +35,6 @@
         <file>Resource/Music/Victory.wav</file>
         <file>Resource/Music/defeat.wav</file>
         <file>Resource/Music/lossLife.wav</file>
+        <file>Resource/Music/Monster.wav</file>
     </qresource>
 </RCC>

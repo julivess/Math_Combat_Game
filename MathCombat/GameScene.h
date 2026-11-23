@@ -54,7 +54,8 @@ private:
 
 	int numberDefeatedMonsters = 0; // количество побежденных монстров 
 
-	QSoundEffect* m_walkingSound;
+	QSoundEffect* m_walkingSound = nullptr;
+	QSoundEffect* m_monsterSound = nullptr;
 };
 
 #endif // GAMESCENE_H

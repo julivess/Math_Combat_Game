@@ -13,6 +13,11 @@ GameScene::GameScene(std::vector<std::pair<Monster*, QPointF>> vectorMonsters, Q
 	m_walkingSound->setSource(QUrl("qrc:/MathCombat/Resource/Music/Walking.wav"));
 	m_walkingSound->setLoopCount(QSoundEffect::Infinite);
 
+	m_monsterSound = new QSoundEffect(this);
+	m_monsterSound->setSource(QUrl("qrc:/MathCombat/Resource/Music/Monster.wav"));
+	m_monsterSound->setVolume(0.3f);
+	m_monsterSound->setLoopCount(QSoundEffect::Infinite);
+	m_monsterSound->play();
 	// ===== ФОН =====
 
 	QPixmap background(BackgroundTheme);
@@ -107,6 +112,7 @@ void GameScene::updateGame()
 			m_movingLeft  = false;  // Нет движения вправо
 			m_movingRight = false;  // нет движения влево
 			m_walkingSound->stop(); //останавливает звук ходьбы
+			m_monsterSound->stop();
 			return;
 		}
 	}
@@ -204,6 +210,7 @@ void GameScene::ContinueGame()
 {
 	m_combatBegin = false; // Бой закончился (снова обрабатывает собития с клавиатуры)
 
+	m_monsterSound->play();
 	m_gameTimer->start(); // Снова запускаем таймер
 }
 
